@@ -79,7 +79,8 @@ export const AuthProvider = ({
               .eq('id', userData?.user?.id || session?.user?.id)
               .single();
             if (data) {
-              if (!data.is_onboarding) router.push('/onboarding');
+              router.push('/');
+              // if (!data.is_onboarding) router.push('/onboarding');
               setUserProfile(data);
             } else {
               setUserProfile(data);
