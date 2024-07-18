@@ -1,6 +1,6 @@
 {
-  "name": "isomorphic",
-  "version": "7.0.0",
+  "name": "uxops",
+  "version": "1.0.0",
   "description": "A nextjs template to build dashboard",
   "private": true,
   "scripts": {
