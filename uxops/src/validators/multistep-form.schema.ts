@@ -2,7 +2,24 @@ import { z } from 'zod';
 import { messages } from '@/config/messages';
 import { fileSchema } from './common-rules';
 
+
+// Step 1
+export const situationSchema = z.object({
+  situation: z.string().min(1, messages.situationIsRequired),
+});
+
+export type SituationSchema = z.infer<typeof situationSchema>;
+
+
 // step 2
+export const companyInfoSchema = z.object({
+  // situation: z.string().min(1, messages.situationIsRequired),
+});
+
+export type CompanyInfoSchema = z.infer<typeof companyInfoSchema>;
+
+
+
 export const propertyTypeSchema = z.object({
   propertyType: z.string().min(1, messages.propertyTypeIsRequired),
 });

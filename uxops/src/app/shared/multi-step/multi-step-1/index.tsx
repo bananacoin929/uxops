@@ -3,7 +3,7 @@
 import { useAtom } from 'jotai';
 import { atomWithReset, atomWithStorage } from 'jotai/utils';
 import cn from '@utils/class-names';
-import Footer from '@/app/multi-step/footer';
+import Footer from '@/app/(dashboard)/onboarding/footer';
 import StepOne from '@/app/shared/multi-step/multi-step-1/step-1';
 import StepTwo from '@/app/shared/multi-step/multi-step-1/step-2';
 import StepThree from '@/app/shared/multi-step/multi-step-1/step-3';
@@ -15,6 +15,11 @@ import Congratulations from '@/app/shared/multi-step/multi-step-1/congratulation
 import { FileSchema } from '@/validators/common-rules';
 
 type FormDataType = {
+  situation: string;
+  companyInfo: any,
+
+
+
   propertyType: string;
   placeType: string;
   address: string | undefined;
@@ -34,6 +39,10 @@ type FormDataType = {
 };
 
 export const initialFormData = {
+  situation: '',
+  companyInfo: {},
+
+
   propertyType: '',
   placeType: '',
   address: '',
@@ -62,9 +71,9 @@ export enum Step {
   StepTwo,
   StepThree,
   StepFour,
-  StepFive,
-  StepSix,
-  StepSeven,
+  // StepFive,
+  // StepSix,
+  // StepSeven,
   StepEight,
 }
 
@@ -101,9 +110,9 @@ const MAP_STEP_TO_COMPONENT = {
   [Step.StepTwo]: StepTwo,
   [Step.StepThree]: StepThree,
   [Step.StepFour]: StepFour,
-  [Step.StepFive]: StepFive,
-  [Step.StepSix]: StepSix,
-  [Step.StepSeven]: StepSeven,
+  // [Step.StepFive]: StepFive,
+  // [Step.StepSix]: StepSix,
+  // [Step.StepSeven]: StepSeven,
   [Step.StepEight]: Congratulations,
 };
 

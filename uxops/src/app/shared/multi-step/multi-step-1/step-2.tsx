@@ -4,47 +4,41 @@ import { useEffect } from 'react';
 import { useAtom } from 'jotai';
 import { toast } from 'react-hot-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { AdvancedRadio, RadioGroup } from 'rizzui';
-import HouseIcon from '@components/icons/house';
-import ApartmentIcon from '@components/icons/apartment';
-import BarnIcon from '@components/icons/barn';
-import SkyscraperIcon from '@components/icons/skyscraper';
-import TentIcon from '@components/icons/tent';
-import CabinIcon from '@components/icons/cabin';
-import CastleIcon from '@components/icons/castle';
-import CaveIcon from '@components/icons/cave';
-import ContainerHouseIcon from '@components/icons/container-house';
-import MobileHomeIcon from '@components/icons/mobile-home';
-import HouseBoatIcon from '@components/icons/house-boat';
-import FarmHouseIcon from '@components/icons/farm-house';
-import FormSummary from '@/app/shared/multi-step/multi-step-1/form-summary';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import {
   formDataAtom,
   useStepperOne,
 } from '@/app/shared/multi-step/multi-step-1';
 import {
-  PropertyTypeSchema,
-  propertyTypeSchema,
+  CompanyInfoSchema,
+  companyInfoSchema,
 } from '@/validators/multistep-form.schema';
 
-const properties: { name: string; label: string; icon: React.ReactNode }[] = [
-  { name: 'house', label: 'House', icon: <HouseIcon /> },
-  { name: 'apartment', label: 'Apartment', icon: <ApartmentIcon /> },
-  { name: 'barn', label: 'Barn', icon: <BarnIcon /> },
-  { name: 'tower', label: 'Tower', icon: <SkyscraperIcon /> },
-  { name: 'tent', label: 'Tent', icon: <TentIcon /> },
-  { name: 'cabin', label: 'Cabin', icon: <CabinIcon /> },
-  { name: 'castle', label: 'Castle', icon: <CastleIcon /> },
-  { name: 'cave', label: 'Cave', icon: <CaveIcon /> },
-  { name: 'container', label: 'Container', icon: <ContainerHouseIcon /> },
-  { name: 'mobile-home', label: 'Mobile Home', icon: <MobileHomeIcon /> },
-  // { name: 'hotel', label: 'Hotel', icon: <HouseIcon /> },
-  { name: 'house-boat', label: 'House Boat', icon: <HouseBoatIcon /> },
-  // { name: 'tiny-home', label: 'Tiny Home', icon: <HouseIcon /> },
-  // { name: 'tree-house', label: 'Tree House', icon: <HouseIcon /> },
-  { name: 'farm-house', label: 'Farm House', icon: <FarmHouseIcon /> },
-];
+import { formCompanyParts } from '@/app/shared/ecommerce/product/create-edit/form-nav';
+
+import OfficeLocation from './Step2/OfficeLocation';
+import MainOfficeTimeZone from './Step2/MainOfficeTimeZone';
+import NumberOfDepartments from './Step2/NumberOfDepartments';
+import NumberOfEmployees from './Step2/NumberOfEmployees';
+import OrganizationName from './Step2/OrganizationName';
+import OrganizationIndustry from './Step2/OrganizationIndustry';
+import AdminContactInfo from './Step2/AdminContactInfo';
+import DataCenter from './Step2/DataCenter';
+import PublicCloud from './Step2/PublicCloud';
+
+import { Element } from 'react-scroll';
+
+const MAP_STEP_TO_COMPONENT = {
+  [formCompanyParts.location]: OfficeLocation,
+  [formCompanyParts.timezone]: MainOfficeTimeZone,
+  [formCompanyParts.numberOfDepartments]: NumberOfDepartments,
+  [formCompanyParts.totalNumberOfEmployees]: NumberOfEmployees,
+  [formCompanyParts.organizationName]: OrganizationName,
+  [formCompanyParts.organizationIndustry]: OrganizationIndustry,
+  [formCompanyParts.adminContactInfo]: AdminContactInfo,
+  [formCompanyParts.dateCenter]: DataCenter,
+  [formCompanyParts.publicCloud]: PublicCloud,
+};
 
 export default function StepTwo() {
   const { step, gotoNextStep } = useStepperOne();
@@ -54,73 +48,56 @@ export default function StepTwo() {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<PropertyTypeSchema>({
-    resolver: zodResolver(propertyTypeSchema),
+  } = useForm<CompanyInfoSchema>({
+    resolver: zodResolver(companyInfoSchema),
     defaultValues: {
-      propertyType: formData.propertyType,
+      // companyInfo: formData.companyInfo,
     },
   });
 
-  useEffect(() => {
-    if (errors.propertyType) {
-      toast.error(errors.propertyType.message as string);
-    }
-  }, [errors]);
+  // useEffect(() => {
+  //   if (errors.propertyType) {
+  //     toast.error(errors.propertyType.message as string);
+  //   }
+  // }, [errors]);
 
-  const onSubmit: SubmitHandler<PropertyTypeSchema> = (data) => {
+  const onSubmit: SubmitHandler<CompanyInfoSchema> = (data) => {
     console.log('data', data);
     setFormData((prev) => ({
       ...prev,
-      propertyType: data.propertyType,
+      // companyInfo: data.companyInfo,
     }));
     gotoNextStep();
   };
 
   return (
     <>
-      <div className="col-span-full flex flex-col justify-center @5xl:col-span-5">
-        <FormSummary
-          className="@7xl:me-10"
-          title="Which of these best describes your place?"
-          description="Your property is unique and holds countless stories within its walls. We're eager to learn more about it so we can help you showcase its best features to potential buyers or tenants."
-        />
-      </div>
-
-      <div className="col-span-full flex items-center justify-center @5xl:col-span-7">
+      <div className=" w-0 @5xl:col-span-1" />
+      <div className="col-span-full flex items-center justify-center @5xl:col-span-10">
         <form
           id={`rhf-${step.toString()}`}
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={onSubmit}
           className="flex-grow rounded-lg bg-white p-5 @4xl:p-7 dark:bg-gray-0"
         >
-          <>
-            <Controller
-              name="propertyType"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <RadioGroup
-                  value={value}
-                  setValue={onChange}
-                  className="col-span-full grid grid-cols-2 gap-4 @3xl:grid-cols-3 @4xl:gap-6 @6xl:grid-cols-3"
-                >
-                  {properties.map((property) => (
-                    <AdvancedRadio
-                      key={property.name}
-                      value={property.name}
-                      className=" [&_.rizzui-advanced-radio]:px-6 [&_.rizzui-advanced-radio]:py-6"
-                      inputClassName="[&~span]:border-0 [&~span]:ring-1 [&~span]:ring-gray-200 [&~span:hover]:ring-primary [&:checked~span:hover]:ring-primary [&:checked~span]:border-1 [&:checked~.rizzui-advanced-radio]:ring-2 [&~span_.icon]:opacity-0 [&:checked~span_.icon]:opacity-100"
-                    >
-                      <span className="mb-4 block h-8 w-8 [&_svg]:w-8">
-                        {property.icon}
-                      </span>
-                      <span className="font-semibold">{property.label}</span>
-                    </AdvancedRadio>
-                  ))}
-                </RadioGroup>
-              )}
-            />
-          </>
+          <h1 className="mb-4 text-2xl font-bold">Organization Infomation</h1>
+          <p className="mb-6 text-gray-500 dark:text-gray-400">
+            Please input the organization information.
+          </p>
+          <div className="grid gap-7 divide-y divide-dashed divide-gray-200 @2xl:gap-9 @3xl:gap-11">
+            {Object.entries(MAP_STEP_TO_COMPONENT).map(([key, Component]) => (
+              <Element
+                key={key}
+                name={formCompanyParts[key as keyof typeof formCompanyParts]}
+              >
+                {
+                  <Component className="grid grid-cols-12 pt-7 @2xl:pt-9 @3xl:pt-11" />
+                }
+              </Element>
+            ))}
+          </div>
         </form>
       </div>
+      <div className=" w-0 @5xl:col-span-1" />
     </>
   );
 }

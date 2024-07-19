@@ -22,7 +22,7 @@ const initialValues: LoginSchema = {
 export default function SignInForm() {
   const { supabase } = useSupabase();
   const router = useRouter();
-  const { refetchUserProfile } = useUserProfile();
+  const { userProfile, refetchUserProfile } = useUserProfile();
 
   const isMedium = useMedia('(max-width: 1200px)', false);
   const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
@@ -38,7 +38,8 @@ export default function SignInForm() {
       setGlobalInLocal(JSON.stringify(userInfo));
       await refetchUserProfile({ isFreshData: true });
       successNotification('Welcome to our homepage!');
-      router.replace('/');
+      if (userProfile?.is_onboarding === false) router.push('/onboarding');
+      else router.push('/');
     }
   };
 

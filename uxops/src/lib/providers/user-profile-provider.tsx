@@ -57,8 +57,8 @@ export const AuthProvider = ({
         .select('*')
         .eq('id', session?.user?.id)
         .single();
-      console.log(data);
       if (data) {
+        if (data.is_onboarding === false) router.push('/onboarding');
         setUserProfile(data);
       }
     }
@@ -69,7 +69,6 @@ export const AuthProvider = ({
       try {
         const isFreshData = params?.isFreshData || false;
         const userData: any = getAllDataFromLocal();
-        console.log(userData);
 
         if (userData?.user?.id) {
           if (!userData?.user?.id || isFreshData) {
@@ -79,14 +78,14 @@ export const AuthProvider = ({
               .eq('id', userData?.user?.id || session?.user?.id)
               .single();
             if (data) {
-              router.push('/');
-              // if (!data.is_onboarding) router.push('/onboarding');
+              if (!data.is_onboarding) router.push('/onboarding');
               setUserProfile(data);
             } else {
               setUserProfile(data);
             }
             setGlobalInLocal(JSON.stringify(data));
           } else {
+            if (userData.is_onboarding === false) router.push('/onboarding');
             setUserProfile(userData);
           }
         } else init();
