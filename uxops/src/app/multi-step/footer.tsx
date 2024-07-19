@@ -53,7 +53,7 @@ export default function Footer({ isLoading, className }: FooterProps) {
   }, [pathname, searchParams]);
 
   function buttonAttr() {
-    if (step === 7) {
+    if (step === 4) {
       return {
         onClick: () => push('/'),
       };
