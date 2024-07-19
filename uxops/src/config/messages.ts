@@ -50,6 +50,7 @@ export const messages = {
   fullNameIsRequired: 'Full name is required',
   propertyTypeIsRequired: 'Property type is required',
   placeTypeIsRequired: 'Place type is required',
+  situationIsRequired: 'Situation is required',
   amenitiesAreRequired: 'Amenities are required',
   thisFieldIsRequired: 'This Field is required',
   propertyNameIsRequired: 'Property name is required',
