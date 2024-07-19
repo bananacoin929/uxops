@@ -1,17 +1,16 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { type NextRequest, NextResponse } from 'next/server';
 
-
 const authRoutes = [
-  "/setting",
-  "/search",
-  "/",
-  "/onboarding",
-  "/list",
-  "/subscription",
-  "/message",
-  "/moderate",
-  "/feed"
+  '/setting',
+  '/search',
+  '/',
+  '/onboarding',
+  '/list',
+  '/subscription',
+  '/message',
+  '/moderate',
+  '/feed',
 ];
 
 const isInAuthRoute = (path: string) => {
@@ -30,7 +29,6 @@ export const updateSession = async (request: NextRequest) => {
     });
 
     const { pathname } = request.nextUrl;
-
 
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -86,8 +84,8 @@ export const updateSession = async (request: NextRequest) => {
       data: { user },
     } = await supabase.auth.getUser();
 
-    const isAuthenticated =  !!user;
-
+    const isAuthenticated = !!user;
+    // console.log('*********', user);
 
     if (!isAuthenticated && isInAuthRoute(pathname)) {
       const url = request.nextUrl.clone();
