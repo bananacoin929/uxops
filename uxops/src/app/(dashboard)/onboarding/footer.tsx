@@ -12,7 +12,7 @@ import {
   initialFormData,
   stepperAtomOne,
   useStepperOne,
-} from '@/app/shared/multi-step/multi-step-1';
+} from '@/app/(dashboard)/onboarding/Steps';
 
 interface FooterProps {
   formId?: number;
@@ -21,14 +21,14 @@ interface FooterProps {
 }
 
 function buttonLabel(formId?: number) {
-  if (formId === 3) {
+  if (formId === 5) {
     return (
       <>
         Submit <PiCheck />
       </>
     );
   }
-  if (formId === 4) {
+  if (formId === 6) {
     return 'Back to Home';
   }
   return (
@@ -55,7 +55,7 @@ export default function Footer({ isLoading, className }: FooterProps) {
   }, [pathname, searchParams]);
 
   function buttonAttr() {
-    if (step === 4) {
+    if (step === 6) {
       return {
         onClick: () => push('/'),
       };
