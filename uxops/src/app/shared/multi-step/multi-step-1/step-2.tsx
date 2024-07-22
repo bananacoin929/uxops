@@ -29,15 +29,15 @@ import PublicCloud from './Step2/PublicCloud';
 import { Element } from 'react-scroll';
 
 const MAP_STEP_TO_COMPONENT = {
-  [formCompanyParts.location]: OfficeLocation,
-  [formCompanyParts.timezone]: MainOfficeTimeZone,
-  [formCompanyParts.numberOfDepartments]: NumberOfDepartments,
+  // [formCompanyParts.location]: OfficeLocation,
+  // [formCompanyParts.timezone]: MainOfficeTimeZone,
+  // [formCompanyParts.numberOfDepartments]: NumberOfDepartments,
   [formCompanyParts.totalNumberOfEmployees]: NumberOfEmployees,
-  [formCompanyParts.organizationName]: OrganizationName,
-  [formCompanyParts.organizationIndustry]: OrganizationIndustry,
-  [formCompanyParts.adminContactInfo]: AdminContactInfo,
-  [formCompanyParts.dateCenter]: DataCenter,
-  [formCompanyParts.publicCloud]: PublicCloud,
+  // [formCompanyParts.organizationName]: OrganizationName,
+  // [formCompanyParts.organizationIndustry]: OrganizationIndustry,
+  // [formCompanyParts.adminContactInfo]: AdminContactInfo,
+  // [formCompanyParts.dateCenter]: DataCenter,
+  // [formCompanyParts.publicCloud]: PublicCloud,
 };
 
 export default function StepTwo() {
