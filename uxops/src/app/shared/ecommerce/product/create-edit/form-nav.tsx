@@ -15,15 +15,13 @@ export const formParts = {
 };
 
 export const formCompanyParts = {
-  location: 'location',
-  timezone: 'timezone',
-  numberOfDepartments: 'numberOfDepartments',
+  companyName: 'companyName',
+  companyIndustry: 'companyIndustry',
+  mainLocation: 'mainLocation',
+  addLocations: 'addLocations',
   totalNumberOfEmployees: 'totalNumberOfEmployees',
-  organizationName: 'organizationName',
-  organizationIndustry: 'organizationIndustry',
-  adminContactInfo: 'adminContactInfo',
-  dateCenter: 'dateCenter',
-  publicCloud: 'publicCloud',
+  dataCenterLocations: 'dataCenterLocations',
+  publicCloudProvider: 'publicCloudProvider',
 };
 
 export const menuItems = [

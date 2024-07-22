@@ -1,4 +1,4 @@
-import MultiStepFormOne from '@/app/shared/multi-step/multi-step-1';
+import MultiStepFormOne from '@/app/(dashboard)/onboarding/Steps';
 import { metaObject } from '@/config/site.config';
 
 export const metadata = {

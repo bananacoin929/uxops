@@ -17,7 +17,7 @@ import cn from '@utils/class-names';
 import { useDrawer } from '@/app/shared/drawer-views/use-drawer';
 import { useFilterControls } from '@hooks/use-filter-control';
 import { useSearchParams } from 'next/navigation';
-import Autocomplete from '@components/google-map/autocomplete';
+import Autocomplete from '@components/google-map/autocomplete'; 
 import ForSaleFilter from '@/app/shared/explore-listing/listing-filters/for-sale-filter';
 import PriceFilter from '@/app/shared/explore-listing/listing-filters/price-filter';
 import AccommodationFilter from '@/app/shared/explore-listing/listing-filters/accommodation-filter';
