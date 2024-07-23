@@ -28,18 +28,18 @@ export default function SignInForm() {
   const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
     console.log('Sign in form data', data);
 
-    const { data: userInfo, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: data.email,
       password: data.password,
     });
     if (error) {
       errorNotification(error.message);
     } else {
-      setGlobalInLocal(JSON.stringify(userInfo));
       await refetchUserProfile({ isFreshData: true });
+      setGlobalInLocal(JSON.stringify(userProfile));
       successNotification('Welcome to our homepage!');
-      if (userProfile?.is_onboarding === false) router.push('/onboarding');
-      else router.push('/');
+      if (userProfile?.is_onboarding === false) router.replace('/onboarding');
+      else router.replace('/');
     }
   };
 

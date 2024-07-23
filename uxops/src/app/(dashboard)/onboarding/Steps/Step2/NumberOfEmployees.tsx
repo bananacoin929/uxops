@@ -1,19 +1,18 @@
-import { Input, Select } from 'rizzui';
+import { Input } from 'rizzui';
 import cn from '@utils/class-names';
+import { Controller, useFormContext } from 'react-hook-form';
 import FormGroup from '@/app/shared/from-group-onboarding';
-import { useState } from 'react';
-
-const options = [
-  { label: 'Eastern Time (US & Canada)', value: 'EST' },
-  { label: 'Pacific Time (US & Canada)', value: 'PST' },
-];
 
 export default function TotalNumberOfEmployees({
   className,
 }: {
   className?: string;
 }) {
-  const [value, setValue] = useState([]);
+  const {
+    control,
+    getValues,
+    formState: { errors },
+  } = useFormContext();
 
   return (
     <FormGroup
@@ -21,7 +20,22 @@ export default function TotalNumberOfEmployees({
       description="Total Number of Employees"
       className={cn(className)}
     >
-      <Input className="col-span-full" type="number" />
+      <Controller
+        name="total_employees"
+        control={control}
+        render={({ field: { onChange, value } }) => (
+          <Input
+            placeholder="1000"
+            className="col-span-full"
+            type="number"
+            value={value}
+            onChange={(e) => {
+              onChange(parseInt(e.target.value));
+            }}
+            error={errors.total_employees?.message as string}
+          />
+        )}
+      />
     </FormGroup>
   );
 }

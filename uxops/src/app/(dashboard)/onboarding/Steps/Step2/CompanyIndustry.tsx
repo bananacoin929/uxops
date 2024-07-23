@@ -19,7 +19,6 @@ export default function CompanyIndustry({ className }: { className?: string }) {
     control,
     formState: { errors },
   } = useFormContext();
-  console.log(errors);
 
   return (
     <FormGroup

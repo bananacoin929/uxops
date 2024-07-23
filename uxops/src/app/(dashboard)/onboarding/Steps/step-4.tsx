@@ -2,140 +2,66 @@
 
 import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
-import {
-  Switch,
-  Checkbox,
-  Select,
-  SelectOption,
-  Button,
-  Input,
-  Textarea,
-  ActionIcon,
-  Text,
-  Modal,
-} from 'rizzui';
-
+import { Select, Input } from 'rizzui';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SubmitHandler, useForm, useFormContext } from 'react-hook-form';
+import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import {
   formDataAtom,
   useStepperOne,
 } from '@/app/(dashboard)/onboarding/Steps';
+import { PiXBold, PiCheckBold } from 'react-icons/pi';
 import {
-  CompanyInfoSchema,
-  companyInfoSchema,
-} from '@/validators/multistep-form.schema';
-import { PiTagBold, PiXBold } from 'react-icons/pi';
+  FormStep4Schema,
+  formStep4Schema,
+  LocationSchema,
+} from '@/validators/onboarding-form.schema';
 
 export default function StepThree() {
   const { step, gotoNextStep } = useStepperOne();
   const [formData, setFormData] = useAtom(formDataAtom);
-  const [items, setItems] = useState<string[]>([]);
-
-  const [isTeamModalOpen, setIsTeamModalOpen] = useState(false);
-  const [isDepartmentModalOpen, setIsDepartmentModalOpen] = useState(false);
-  const [modalType, setModalType] = useState('Add');
-  const [modalData, setModalData] = useState<any>({});
+  const [officeOptions, setOfficeOptions] = useState([]);
 
   const {
     control,
+    setValue,
+    getValues,
     formState: { errors },
     handleSubmit,
-  } = useForm<CompanyInfoSchema>({
-    resolver: zodResolver(companyInfoSchema),
+  } = useForm<FormStep4Schema>({
+    resolver: zodResolver(formStep4Schema),
     defaultValues: {
-      // companyInfo: formData.companyInfo,
+      departments_details: formData.departments_details,
     },
   });
 
-  // useEffect(() => {
-  //   if (errors.propertyType) {
-  //     toast.error(errors.propertyType.message as string);
-  //   }
-  // }, [errors]);
+  useEffect(() => {
+    let options: any = [];
+    if (formData.main_location)
+      options.push({ label: 'Main Office', value: -1 });
+    if (formData.secondary_location)
+      options.push({
+        label: 'Secondary Office',
+        value: -2,
+      });
+    if (formData.add_locations?.length)
+      formData.add_locations.map((item: LocationSchema) =>
+        options.push({ label: item.name, value: item.id })
+      );
+    setOfficeOptions(options);
+  }, [
+    formData.add_locations,
+    formData.main_location,
+    formData.secondary_location,
+  ]);
 
-  const onSubmit: SubmitHandler<CompanyInfoSchema> = (data) => {
+  const onSubmit: SubmitHandler<FormStep4Schema> = (data) => {
     console.log('data', data);
     setFormData((prev) => ({
       ...prev,
-      // companyInfo: data.companyInfo,
+      departments_details: data.departments_details,
     }));
     gotoNextStep();
   };
-  const [departments, setDepartments] = useState([
-    {
-      id: 1,
-      name: 'IT',
-      totalMember: 0,
-    },
-    {
-      id: 2,
-      name: 'HR',
-      totalMember: 0,
-    },
-    {
-      id: 3,
-      name: 'Marketing',
-      totalMembers: 0,
-    },
-  ]);
-  const [selectedDepartment, setSelectedDepartment] = useState<any>(null);
-  const [selectedTeam, setSelectedTeam] = useState<any>(null);
-
-  const options = [
-    { label: 'US, AB, BC', value: 'Amazon' },
-    { label: 'UK, AB, BC', value: 'EST' },
-  ];
-
-  const handleAddDepartment = () => {
-    const newDepartment = {
-      id: departments.length + 1,
-      name: 'New Department',
-      totalMembers: 0,
-    };
-    setDepartments([...departments, newDepartment]);
-    setSelectedDepartment(newDepartment);
-  };
-
-  const handleSaveDepartment = (department: any) => {
-    const updatedDepartment = {
-      ...selectedDepartment,
-      name: department.name,
-    };
-    const updatedDepartments = departments.map((dept) =>
-      dept.id === selectedDepartment.id ? updatedDepartment : dept
-    );
-    setDepartments(updatedDepartments);
-    setIsDepartmentModalOpen(false);
-    setSelectedTeam(null);
-  };
-
-  const handleDeleteDepartment = (department: any) => {
-    const updatedDepartments = departments.filter(
-      (dept) => dept.id !== department.id
-    );
-    setDepartments(updatedDepartments);
-    setIsDepartmentModalOpen(false);
-    setSelectedTeam(null);
-  };
-
-  // const { register, setValue } = useFormContext();
-  const [itemText, setItemText] = useState<string>('');
-
-  function handleItemAdd(): void {
-    // if (itemText. !== '') {
-    //   const newItem: string = itemText;
-
-    //   setItems([...items, newItem]);
-    //   // setValue('departments', [...items, newItem]);
-    //   setItemText('');
-    // }
-  }
-
-  function handleItemRemove(text: string): void {
-    const updatedItems = items.filter((item) => item !== text);
-    setItems(updatedItems);
-  }
 
   return (
     <>
@@ -143,156 +69,164 @@ export default function StepThree() {
       <div className="col-span-full flex items-center justify-center @5xl:col-span-10">
         <form
           id={`rhf-${step.toString()}`}
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit(onSubmit)}
           className="flex-grow rounded-lg bg-white p-5 @4xl:p-7 dark:bg-gray-0"
         >
-          <section className="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 md:gap-8 md:p-6 lg:grid-cols-3 lg:gap-10 xl:grid-cols-3">
+          <section className="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 md:gap-8 md:p-6 lg:grid-cols-2 lg:gap-10 xl:grid-cols-2">
             <div className="col-span-full">
-              <h1 className="mb-4 text-2xl font-bold">Departments</h1>
+              <h1 className="mb-4 text-2xl font-bold">
+                Departments Detail Info
+              </h1>
               <p className="mb-6 text-gray-500 dark:text-gray-400">
-                Please edit the departments that are available to monitor in
-                your organization.
+                Please enter additional information for each department you
+                selected.
               </p>
-              <div className="flex items-center justify-between">
-                <Input
-                  type="search"
-                  placeholder="Search departments..."
-                  className="rounded-lg bg-background sm:w-[300px] md:w-[200px] lg:w-[300px]"
-                />
-                <Button
-                  variant="outline"
-                  size="md"
-                  className=""
-                  onClick={handleAddDepartment}
-                >
-                  Add Department
-                </Button>
-              </div>
             </div>
-            {departments.map((department) => (
-              <div
-                key={department.id}
-                onClick={() => {
-                  // setSelectedDepartment(department);
-                  // setModalData(department);
-                  // setIsDepartmentModalOpen(true);
-                }}
-                className={`cursor-pointer rounded-lg border bg-background p-4 transition-colors ${
-                  selectedDepartment?.id === department.id ? '' : ''
-                }`}
-              >
-                <div className="mb-4">
-                  <div className="text-lg font-bold text-black">
-                    {department.name}
-                  </div>
-                </div>
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center">
-                    <Select
-                      className={'col-span-full'}
-                      value={itemText}
-                      options={options}
-                      onChange={(e: any) => setItemText(e)}
-                      // onChange={setValue}
-                    />
-                    {/* <Input
-                      value={itemText}
-                      // placeholder={`Enter a ${name}`}
-                      prefix={<PiTagBold className="h-4 w-4" />}
-                      className="w-full"
-                    />
-                    <input type="hidden" /> */}
-                    <Button
-                      onClick={handleItemAdd}
-                      className="ms-4 shrink-0 text-sm @lg:ms-5"
-                    >
-                      Add
-                    </Button>
-                  </div>
-
-                  {items.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {items.map((text, index) => (
-                        <div
-                          key={index}
-                          className="flex items-center rounded-full border border-gray-300 py-1 pe-2.5 ps-3 text-sm font-medium text-gray-700"
-                        >
-                          {text}
-                          <button
-                            onClick={() => handleItemRemove(text)}
-                            className="ps-2 text-gray-500 hover:text-gray-900"
-                          >
-                            <PiXBold className="h-3.5 w-3.5" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                  <Input
-                    label="TotalNumber"
-                    className="col-span-full"
-                    type="number"
-                  />
-                  {/* <div className="font-medium">{department.locations}</div> */}
-                  {/* <div className="font-medium">{department.totalMembers}</div> */}
-                </div>
-              </div>
-            ))}
-            {/* <Modal
-              isOpen={isDepartmentModalOpen}
-              onClose={() => setIsDepartmentModalOpen(false)}
-            >
-              <div className="m-auto px-7 pb-8 pt-6">
-                <div className="mb-7 flex items-center justify-between">
-                  <Text as="b" className="text-lg">
-                    {modalType} Team
-                  </Text>
-                  <ActionIcon
-                    size="sm"
-                    variant="text"
-                    onClick={() => setIsDepartmentModalOpen(false)}
-                  >
-                    <PiXBold className="h-5 w-5 text-base" />
-                  </ActionIcon>
-                </div>
-                <div className="grid grid-cols-1 gap-x-5 gap-y-6 [&_label>span]:font-medium">
-                  <div className="grid gap-4">
-                    <div className="grid gap-2">
-                      <div className="text-sm font-medium">Department Name</div>
-                      <Input
-                        id="team-name"
-                        type="text"
-                        defaultValue={modalData?.name}
-                        onChange={(e) =>
-                          setModalData({
-                            ...modalData,
-                            name: e.target.value,
-                          })
+            <Controller
+              name="departments_details"
+              control={control}
+              render={({ field: { value } }) => (
+                <>
+                  {getValues().departments_details?.map(
+                    (department: any, index: number) => (
+                      <div
+                        key={index}
+                        className={
+                          'flex cursor-pointer flex-col gap-4 rounded-lg border bg-background p-4 transition-colors'
                         }
-                        className="rounded-lg bg-background"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-end gap-3">
-                    <Button
-                      type="submit"
-                      size="md"
-                      className="col-span-2"
-                      onClick={() => handleSaveDepartment(modalData)}
-                    >
-                      Save
-                    </Button>
-                    <Button
-                      size="md"
-                      color="danger"
-                      onClick={() => handleDeleteDepartment(modalData)}
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </Modal> */}
+                      >
+                        <div className="mb-4">
+                          <div className="text-lg font-bold text-black">
+                            {department.name}
+                          </div>
+                        </div>
+                        <Input
+                          label="Total Team Members"
+                          className="col-span-full"
+                          type="number"
+                          value={department.total_teammembers}
+                          error={
+                            (errors.departments_details as any)?.[index]
+                              ?.total_teammembers?.message as string
+                          }
+                          onChange={(e) => {
+                            let updateData = value?.map(
+                              (it: any, ind: number) => {
+                                if (ind === index)
+                                  return {
+                                    ...it,
+                                    total_teammembers: parseInt(e.target.value),
+                                  };
+                                else return it;
+                              }
+                            );
+                            setValue('departments_details', updateData);
+                          }}
+                        />
+                        <div className="flex flex-col gap-4">
+                          <Select
+                            multiple
+                            label="Department Locations"
+                            placeholder='Select the department locations'
+                            className={'col-span-full'}
+                            options={officeOptions}
+                            error={
+                              (errors.departments_details as any)?.[index]
+                                ?.locations?.message as string
+                            }
+                            displayValue={(selected: any) => {
+                              return selected
+                                .map((it: any) => it.label)
+                                .join(', ');
+                            }}
+                            getOptionDisplayValue={(option: {
+                              value: any;
+                              label: any;
+                            }) => {
+                              return (
+                                <div className="flex w-full items-center gap-5">
+                                  {option.label}
+                                  {department.locations.filter(
+                                    (lo: any) => lo.value === option.value
+                                  )?.length ? (
+                                    <PiCheckBold className="h-3.5 w-3.5" />
+                                  ) : (
+                                    ''
+                                  )}
+                                </div>
+                              );
+                            }}
+                            value={department.locations}
+                            onChange={(e: any) => {
+                              console.log(e);
+                              let updateData = value?.map(
+                                (it: any, ind: number) => {
+                                  if (ind === index) {
+                                    const mergedArray = it.locations.concat(
+                                      e.filter(
+                                        (item2: any) =>
+                                          !it.locations.some(
+                                            (item1: any) =>
+                                              item1.label === item2.label &&
+                                              item1.value === item2.value
+                                          )
+                                      )
+                                    );
+                                    return {
+                                      ...it,
+                                      locations: mergedArray,
+                                    };
+                                  } else return it;
+                                }
+                              );
+                              setValue('departments_details', updateData);
+                            }}
+                          />
+                          {department.locations.length > 0 && (
+                            <div className="mt-3 flex flex-wrap gap-2">
+                              {department.locations.map((text: any) => (
+                                <div
+                                  key={text?.value}
+                                  className="flex items-center rounded-full border border-gray-300 py-1 pe-2.5 ps-3 text-sm font-medium text-gray-700"
+                                >
+                                  {text?.label}
+                                  <button
+                                    onClick={() => {
+                                      let updateData = value?.map(
+                                        (it: any, ind: number) => {
+                                          if (ind === index) {
+                                            let updatelocations =
+                                              it.locations.filter(
+                                                (loc: any) =>
+                                                  loc?.value !== text?.value
+                                              );
+                                            return {
+                                              ...it,
+                                              locations: updatelocations,
+                                            };
+                                          } else return it;
+                                        }
+                                      );
+                                      setValue(
+                                        'departments_details',
+                                        updateData
+                                      );
+                                    }}
+                                    className="ps-2 text-gray-500 hover:text-gray-900"
+                                  >
+                                    <PiXBold className="h-3.5 w-3.5" />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )
+                  )}
+                </>
+              )}
+            />
           </section>
         </form>
       </div>

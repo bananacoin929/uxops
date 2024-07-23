@@ -6,11 +6,11 @@ import cn from '@utils/class-names';
 import Footer from '@/app/(dashboard)/onboarding/footer';
 import StepOne from '@/app/(dashboard)/onboarding/Steps/step-1'
 import StepTwo from '@/app/(dashboard)/onboarding/Steps/step-2';
-import StepThree from '@/app/(dashboard)/onboarding/Steps/step-4';
-import StepFour from '@/app/(dashboard)/onboarding/Steps/step-14';
+import StepThree from '@/app/(dashboard)/onboarding/Steps/step-3';
+import StepFour from '@/app/(dashboard)/onboarding/Steps/step-4';
 import StepFive from '@/app/(dashboard)/onboarding/Steps/step-5';
 import StepSix from '@/app/(dashboard)/onboarding/Steps/step-6';
-import StepSeven from '@/app/(dashboard)/onboarding/Steps/step-7';
+import StepSeven from '@/app/(dashboard)/onboarding/Steps/step-5';
 import Congratulations from '@/app/(dashboard)/onboarding/Steps/congratulations';
 import { FileSchema } from '@/validators/common-rules';
 

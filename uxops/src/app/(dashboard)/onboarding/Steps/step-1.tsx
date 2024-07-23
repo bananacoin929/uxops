@@ -1,53 +1,3 @@
-// import Image from 'next/image';
-// import { useForm } from 'react-hook-form';
-// import homeFront from '@public/home-front.png';
-// import FormSummary from '@/app/shared/multi-step/multi-step-1/form-summary';
-// import { useStepperOne } from '@/app/shared/multi-step/multi-step-1';
-
-// export default function StepOne() {
-//   const { step, gotoNextStep } = useStepperOne();
-
-//   const { handleSubmit } = useForm();
-
-//   const onSubmit = () => {
-//     gotoNextStep();
-//   };
-
-//   return (
-//     <>
-//       <div className="col-span-full flex flex-col justify-center @4xl:col-span-5">
-//         <FormSummary
-//           descriptionClassName="@7xl:me-10"
-//           title="Tell us about your place"
-//           description="In this step, we'll ask you which type of property you have and if guests will book the entire place or just a room"
-//         />
-//       </div>
-
-//       <form
-//         id={`rhf-${step.toString()}`}
-//         onSubmit={handleSubmit(onSubmit)}
-//         className="col-span-full grid aspect-[4/3] gap-4 @3xl:grid-cols-12 @4xl:col-span-7 @5xl:gap-5 @7xl:gap-8"
-//       >
-//         <Image
-//           src={homeFront}
-//           alt="home front part 1"
-//           className="mt-auto rounded-lg object-cover object-left-top @3xl:col-span-4 @3xl:h-96 @6xl:h-5/6"
-//         />
-//         <Image
-//           src={homeFront}
-//           alt="home front part 2"
-//           className="my-auto hidden rounded-lg object-cover @3xl:col-span-4 @3xl:block @3xl:h-96 @6xl:h-5/6"
-//         />
-//         <Image
-//           src={homeFront}
-//           alt="home front part 3"
-//           className="mb-auto hidden rounded-lg object-cover object-right-bottom @3xl:col-span-4 @3xl:block @3xl:h-96 @6xl:h-5/6"
-//         />
-//       </form>
-//     </>
-//   );
-// }
-
 'use client';
 
 import { useAtom } from 'jotai';
@@ -55,7 +5,7 @@ import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { AdvancedRadio, FieldError, Input, RadioGroup } from 'rizzui';
+import { Input } from 'rizzui';
 import {
   formDataAtom,
   useStepperOne,
@@ -91,7 +41,6 @@ export default function StepTwo() {
     if (errors.last_name) {
       toast.error(errors.last_name.message as string);
     }
-    console.log('**********', errors);
     if (errors.email) {
       toast.error(errors.email.message as string);
     }
@@ -101,7 +50,6 @@ export default function StepTwo() {
   }, [errors]);
 
   const onSubmit: SubmitHandler<FormStep1Schema> = (data) => {
-    console.log('data', data);
     setFormData((prev) => ({
       ...prev,
       first_name: data.first_name,
@@ -133,9 +81,10 @@ export default function StepTwo() {
                 name="first_name"
                 control={control}
                 render={({ field: { value, onChange } }) => (
-                  <div className="flex items-center justify-between rounded-md border border-muted px-4 py-2.5">
-                    <span>First Name</span>
+                  <div className="flex items-center rounded-md border border-muted px-4 py-2.5">
+                    <span className="w-1/4">First Name</span>
                     <Input
+                      className="w-3/4"
                       defaultValue={value}
                       placeholder="James"
                       onChange={onChange}
@@ -148,8 +97,9 @@ export default function StepTwo() {
                 control={control}
                 render={({ field: { value, onChange } }) => (
                   <div className="flex items-center justify-between rounded-md border border-muted px-4 py-2.5">
-                    <span>Last Name</span>
+                    <span className="w-1/4">Last Name</span>
                     <Input
+                      className="w-3/4"
                       defaultValue={value}
                       placeholder="Potter"
                       onChange={onChange}
@@ -162,8 +112,9 @@ export default function StepTwo() {
                 control={control}
                 render={({ field: { value, onChange } }) => (
                   <div className="flex items-center justify-between rounded-md border border-muted px-4 py-2.5">
-                    <span>Email</span>
+                    <span className="w-1/4">Email</span>
                     <Input
+                      className="w-3/4"
                       defaultValue={value}
                       placeholder="kenzi.lawson@example.com"
                       onChange={onChange}
@@ -176,12 +127,12 @@ export default function StepTwo() {
                 control={control}
                 render={({ field: { value, onChange } }) => (
                   <div className="flex items-center justify-between rounded-md border border-muted px-4 py-2.5">
-                    <span>Phone Number</span>
+                    <span className="w-1/4">Phone Number</span>
                     <PhoneNumber
                       country="us"
                       value={value}
                       onChange={onChange}
-                      className="rtl:[&>.selected-flag]:right-0"
+                      className="w-3/4 rtl:[&>.selected-flag]:right-0"
                       inputClassName="rtl:pr-12"
                       buttonClassName="rtl:[&>.selected-flag]:right-2 rtl:[&>.selected-flag_.arrow]:-left-6"
                     />
