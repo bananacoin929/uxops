@@ -11,8 +11,8 @@ export default function AddLocations({ className }: { className?: string }) {
 
   return (
     <FormGroup
-      title="Additional Locations"
-      description="Input your office locations"
+      title="Data Center Locations"
+      description="Input your data center locations"
       className={cn(className)}
     >
       <div className="col-span-full w-full">
