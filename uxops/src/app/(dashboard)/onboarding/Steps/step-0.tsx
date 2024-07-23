@@ -1,18 +1,21 @@
 'use client';
 
-import {
-  useStepperOne,
-} from '@/app/(dashboard)/onboarding/Steps';
-import { AdvancedRadio, RadioGroup } from 'rizzui';
+import { useStepperOne } from '@/app/(dashboard)/onboarding/Steps';
 
 const Steps = [
   {
     name: 'Admin Info',
-    description: 'We ’ll ask you a few more questions about your organization',
+    description:
+      'We ’ll ask you a few more questions about your organization admin info',
+  },
+  {
+    name: 'Organization Info',
+    description: 'We ’ll ask you a few more question about organization.',
   },
   {
     name: 'Department Info',
-    description: 'We ’ll ask you a few more question about your organization departments.',
+    description:
+      'We ’ll ask you a few more question about your organization departments.',
   },
   {
     name: 'Products',
@@ -29,8 +32,8 @@ export default function StepZero() {
 
   return (
     <>
-      <div className=" w-0 @5xl:col-span-1" />
-      <div className="col-span-full flex items-center justify-center @5xl:col-span-10">
+      <div className=" w-0 @5xl:col-span-3" />
+      <div className="col-span-full flex items-center justify-center @5xl:col-span-6">
         <form
           id={`rhf-${step.toString()}`}
           onSubmit={onSubmit}
@@ -40,16 +43,11 @@ export default function StepZero() {
           <p className="mb-6 text-gray-500 dark:text-gray-400">
             This is our onboarding and we’ll ask you some questions.
           </p>
-          <RadioGroup
-            value=""
-            setValue={() => {}}
-            className="col-span-full grid gap-4 @4xl:gap-6"
-          >
+          <div className="col-span-full grid gap-4 @4xl:gap-6">
             {Steps.map((step, index) => (
-              <AdvancedRadio
+              <div
                 key={index}
-                className=" [&_.rizzui-advanced-radio]:flex [&_.rizzui-advanced-radio]:justify-between [&_.rizzui-advanced-radio]:gap-7 [&_.rizzui-advanced-radio]:px-6 [&_.rizzui-advanced-radio]:py-6"
-                inputClassName="[&~span]:border-0 [&~span]:ring-1 [&~span]:ring-gray-200 [&~span:hover]:ring-primary [&:checked~span:hover]:ring-primary [&:checked~span]:border-1 [&:checked~.rizzui-advanced-radio]:ring-2 [&~span_.icon]:opacity-0 [&:checked~span_.icon]:opacity-100"
+                className=" rounded-xl border-[1px] border-muted px-3 py-4"
               >
                 <article>
                   <h4 className="text-sm font-semibold @5xl:text-base">
@@ -57,12 +55,12 @@ export default function StepZero() {
                   </h4>
                   <p>{step.description}</p>
                 </article>
-              </AdvancedRadio>
+              </div>
             ))}
-          </RadioGroup>
+          </div>
         </form>
       </div>
-      <div className=" w-0 @5xl:col-span-1" />
+      <div className=" w-0 @5xl:col-span-3" />
     </>
   );
 }

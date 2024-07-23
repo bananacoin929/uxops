@@ -30,11 +30,11 @@ export default function Header({ className }: FooterProps) {
     4: 'Departments Details',
     5: 'Products Info',
   };
-  console.log(step, typeof step);
+
   return (
     <header
       className={cn(
-        'flex w-full items-center justify-between px-4 py-5 md:h-20 md:px-5 lg:px-8 4xl:px-10',
+        'flex w-full items-center justify-between md:h-20 px-4 py-5 lg:px-8 4xl:px-10 max-w-[1280px]',
         className
       )}
     >
@@ -58,7 +58,7 @@ export default function Header({ className }: FooterProps) {
           className="gap-2 whitespace-nowrap border-white text-white hover:border-white hover:bg-white hover:text-black"
         >
           <FiSave className="h-4 w-4" />
-          Save & Exit
+          Save & Close
         </Button>
       </div>
     </header>

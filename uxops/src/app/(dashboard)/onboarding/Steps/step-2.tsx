@@ -1,18 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
 import { useAtom } from 'jotai';
-import { toast } from 'react-hot-toast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
 import {
   formDataAtom,
   useStepperOne,
 } from '@/app/(dashboard)/onboarding/Steps';
-import {
-  CompanyInfoSchema,
-  companyInfoSchema,
-} from '@/validators/multistep-form.schema';
 
 import { formCompanyParts } from '@/app/shared/ecommerce/product/create-edit/form-nav';
 
@@ -22,9 +16,7 @@ import CompanyIndustry from './Step2/CompanyIndustry';
 import AddLocations from './Step2/AddLocations';
 import NumberOfEmployees from './Step2/NumberOfEmployees';
 import DataCenterLocations from './Step2/DataCenterLocations';
-import AdminContactInfo from './Step2/AdminContactInfo';
-import DataCenter from './Step2/DataCenter';
-import PublicCloud from './Step2/PublicCloud';
+import PublicCloud from './Step2/PublicCloudProvider';
 
 import { Element } from 'react-scroll';
 
@@ -46,25 +38,40 @@ const MAP_STEP_TO_COMPONENT = {
 export default function StepTwo() {
   const { step, gotoNextStep } = useStepperOne();
   const [formData, setFormData] = useAtom(formDataAtom);
-
   const methods = useForm<FormStep2Schema>({
     resolver: zodResolver(formStep2Schema),
-    defaultValues: {},
+    defaultValues: {
+      company_name: formData.company_name,
+      industry: formData.industry,
+      main_location: formData.main_location,
+      secondary_location: formData.secondary_location,
+      add_locations: formData.add_locations,
+      total_employees: formData.total_employees,
+      data_locations: formData.data_locations,
+      public_cloud_provider: formData.public_cloud_provider,
+    },
   });
 
   const onSubmit: SubmitHandler<FormStep2Schema> = (data) => {
-    console.log('data', data);
-    setFormData((prev) => ({
+    console.log(data);
+    setFormData((prev: any) => ({
       ...prev,
-      // companyInfo: data.companyInfo,
+      company_name: data.company_name,
+      industry: data.industry,
+      main_location: data.main_location,
+      secondary_location: data.secondary_location,
+      add_locations: data.add_locations,
+      total_employees: data.total_employees,
+      data_locations: data.data_locations,
+      public_cloud_provider: data.public_cloud_provider,
     }));
     gotoNextStep();
   };
 
   return (
     <>
-      <div className=" w-0 @5xl:col-span-1" />
-      <div className="col-span-full flex items-center justify-center @5xl:col-span-10">
+      <div className=" w-0 @5xl:col-span-2" />
+      <div className="col-span-full flex items-center justify-center @5xl:col-span-8">
         <FormProvider {...methods}>
           <form
             id={`rhf-${step.toString()}`}
@@ -90,7 +97,7 @@ export default function StepTwo() {
           </form>
         </FormProvider>
       </div>
-      <div className=" w-0 @5xl:col-span-1" />
+      <div className=" w-0 @5xl:col-span-2" />
     </>
   );
 }

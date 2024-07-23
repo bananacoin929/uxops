@@ -11,38 +11,31 @@ import StepThree from '@/app/(dashboard)/onboarding/Steps/step-3';
 import StepFour from '@/app/(dashboard)/onboarding/Steps/step-4';
 import StepFive from '@/app/(dashboard)/onboarding/Steps/step-5';
 import StepSix from '@/app/(dashboard)/onboarding/Steps/step-6';
-import StepSeven from '@/app/(dashboard)/onboarding/Steps/step-7';
 import Congratulations from '@/app/(dashboard)/onboarding/Steps/congratulations';
-import { FileSchema } from '@/validators/common-rules';
-import { DepartSchema } from '@/validators/onboarding-form.schema';
+import {
+  DepartDetailSchema,
+  DepartSchema,
+  LocationSchema,
+  ProductSchema,
+} from '@/validators/onboarding-form.schema';
 
 type FormDataType = {
   first_name: string;
   last_name: string;
   email: string;
   phone: string;
+  company_name: string;
+  industry: string;
+  main_location: string;
+  secondary_location: string;
+  add_locations: LocationSchema[];
+  total_employees: number;
+  data_locations: LocationSchema[];
+  public_cloud_provider: string[];
   departments: string[] | undefined;
   all_departments: DepartSchema[];
-
-  situation: string;
-  companyInfo: any;
-
-  propertyType: string;
-  placeType: string;
-  address: string | undefined;
-  lat: number | undefined;
-  lng: number | undefined;
-  guests: number | undefined;
-  bedrooms: number | undefined;
-  beds: number | undefined;
-  bedroomLock: string;
-  guestType: string;
-  indoorAmenities: string[] | undefined;
-  outdoorAmenities: string[] | undefined;
-  propertyName: string;
-  propertyDescription: string | undefined;
-  priceRange: number[] | undefined;
-  photos: FileSchema[] | undefined;
+  departments_details: DepartDetailSchema[] | undefined;
+  products: ProductSchema[];
 };
 
 export const initialFormData = {
@@ -50,119 +43,174 @@ export const initialFormData = {
   last_name: '',
   email: '',
   phone: '',
+  company_name: '',
+  industry: '',
+  main_location: '',
+  secondary_location: '',
+  add_locations: [],
+  total_employees: 0,
+  data_locations: [],
+  public_cloud_provider: [],
+
   departments: [],
   all_departments: [
     {
       id: 1,
       name: 'Executive',
-      value: 'xecutive',
       selected: false,
     },
     {
       id: 2,
       name: 'Human Resources',
-      value: 'human_resources',
       selected: false,
     },
     {
       id: 3,
       name: 'Finance',
-      value: 'finance',
       selected: false,
     },
     {
       id: 4,
       name: 'Accounting',
-      value: 'accounting',
       selected: false,
     },
     {
       id: 5,
       name: 'Operations',
-      value: 'operations',
       selected: false,
     },
     {
       id: 6,
       name: 'Marketing',
-      value: 'marketing',
       selected: false,
     },
     {
       id: 7,
       name: 'Sales',
-      value: 'sales',
       selected: false,
     },
     {
       id: 8,
       name: 'Information Technology',
-      value: 'information_technology',
       selected: false,
     },
     {
       id: 9,
       name: 'Research & Development',
-      value: 'research_evelopment',
       selected: false,
     },
     {
       id: 10,
       name: 'Legal',
-      value: 'legal',
       selected: false,
     },
     {
       id: 11,
       name: 'Administrative',
-      value: 'administrative',
       selected: false,
     },
     {
       id: 12,
       name: 'General Counsel',
-      value: 'general_counsel',
       selected: false,
     },
     {
       id: 13,
       name: 'Public Relations',
-      value: 'public_relations',
       selected: false,
     },
     {
       id: 14,
       name: 'Corporate Communications',
-      value: 'corporate_communications',
       selected: false,
     },
     {
       id: 15,
       name: 'Business Development',
-      value: 'business_development',
       selected: false,
     },
   ],
-
-  situation: '',
-  companyInfo: {},
-
-  propertyType: '',
-  placeType: '',
-  address: '',
-  lat: undefined,
-  lng: undefined,
-  guests: undefined,
-  bedrooms: undefined,
-  beds: undefined,
-  bedroomLock: '',
-  guestType: '',
-  indoorAmenities: [],
-  outdoorAmenities: [],
-  propertyName: '',
-  propertyDescription: '',
-  priceRange: undefined,
-  photos: undefined,
+  departments_details: [],
+  products: [
+    {
+      id: 1,
+      vendor: {
+        name: 'M365 Apps for enterprise',
+        logo: '/placeholder.svg',
+      },
+      category: 'Office Applications',
+      name: 'Microsoft Office 365',
+      description:
+        'A subscription service offering access to various Microsoft tools and applications, including Word, Excel, PowerPoint, and Outlook.',
+      isActive: false,
+      department: [],
+    },
+    {
+      id: 2,
+      vendor: {
+        name: 'Microsoft',
+        logo: '/placeholder.svg',
+      },
+      category: 'Office Applications',
+      name: 'Teams',
+      description:
+        'A platform for communication and collaboration, offering features like chat, video meetings, and file storage.',
+      isActive: false,
+      department: [],
+    },
+    {
+      id: 3,
+      vendor: {
+        name: 'Microsoft',
+        logo: '/placeholder.svg',
+      },
+      category: 'Office Applications',
+      name: 'Microsoft Outlook',
+      description:
+        'A personal information manager from Microsoft, primarily used as an email application.',
+      isActive: true,
+      department: [],
+    },
+    {
+      id: 4,
+      vendor: {
+        name: 'Microsoft',
+        logo: '/placeholder.svg',
+      },
+      category: 'Development',
+      name: 'Microsoft Edge',
+      description:
+        'A web browser developed by Microsoft, available on various platforms including Windows, macOS, iOS, and Android.',
+      isActive: false,
+      department: [],
+    },
+    {
+      id: 5,
+      vendor: {
+        name: 'Microsoft',
+        logo: '/placeholder.svg',
+      },
+      category: 'Office Applications',
+      name: 'Microsoft Project',
+      description:
+        'A project management software to help project managers with planning, resource allocation, progress tracking, and budget management.',
+      isActive: true,
+      department: [],
+    },
+    {
+      id: 6,
+      vendor: {
+        name: 'Microsoft',
+        logo: '/placeholder.svg',
+      },
+      category: 'Office Applications',
+      name: 'Microsoft Visio',
+      description:
+        'A project management software to help project managers with planning, resource allocation, progress tracking, and budget management.',
+      isActive: true,
+      department: [],
+    },
+  ],
 };
 
 export const formDataAtom = atomWithStorage<FormDataType>(
@@ -177,9 +225,8 @@ export enum Step {
   StepThree,
   StepFour,
   StepFive,
-  // StepSix,
-  // StepSeven,
-  StepEight,
+  StepSix,
+  StepSeven,
 }
 
 const firstStep = Step.StepZero;
@@ -217,9 +264,8 @@ const MAP_STEP_TO_COMPONENT = {
   [Step.StepThree]: StepThree,
   [Step.StepFour]: StepFour,
   [Step.StepFive]: StepFive,
-  // [Step.StepSix]: StepSix,
-  // [Step.StepSeven]: StepSeven,
-  [Step.StepEight]: Congratulations,
+  [Step.StepSix]: StepSix,
+  [Step.StepSeven]: Congratulations,
 };
 
 export const stepOneTotalSteps = Object.keys(MAP_STEP_TO_COMPONENT).length;

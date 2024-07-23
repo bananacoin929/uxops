@@ -6,7 +6,6 @@ import FormGroup from '@/app/shared/from-group-onboarding';
 export default function CompanyName({ className }: { className?: string }) {
   const {
     register,
-    control,
     formState: { errors },
   } = useFormContext();
 
