@@ -82,6 +82,11 @@ export default function StepThree() {
   const [selectedDepartment, setSelectedDepartment] = useState<any>(null);
   const [selectedTeam, setSelectedTeam] = useState<any>(null);
 
+  const options = [
+    { label: 'US, AB, BC', value: 'Amazon' },
+    { label: 'UK, AB, BC', value: 'EST' },
+  ];
+
   const handleAddDepartment = () => {
     const newDepartment = {
       id: departments.length + 1,
@@ -118,13 +123,13 @@ export default function StepThree() {
   const [itemText, setItemText] = useState<string>('');
 
   function handleItemAdd(): void {
-    if (itemText.trim() !== '') {
-      const newItem: string = itemText;
+    // if (itemText. !== '') {
+    //   const newItem: string = itemText;
 
-      setItems([...items, newItem]);
-      // setValue('departments', [...items, newItem]);
-      setItemText('');
-    }
+    //   setItems([...items, newItem]);
+    //   // setValue('departments', [...items, newItem]);
+    //   setItemText('');
+    // }
   }
 
   function handleItemRemove(text: string): void {
@@ -168,12 +173,12 @@ export default function StepThree() {
               <div
                 key={department.id}
                 onClick={() => {
-                  setSelectedDepartment(department);
-                  setModalData(department);
-                  setIsDepartmentModalOpen(true);
+                  // setSelectedDepartment(department);
+                  // setModalData(department);
+                  // setIsDepartmentModalOpen(true);
                 }}
                 className={`cursor-pointer rounded-lg border bg-background p-4 transition-colors ${
-                  selectedDepartment?.id === department.id ? 'bg-muted' : ''
+                  selectedDepartment?.id === department.id ? '' : ''
                 }`}
               >
                 <div className="mb-4">
@@ -183,14 +188,20 @@ export default function StepThree() {
                 </div>
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center">
-                    <Input
+                    <Select
+                      className={'col-span-full'}
+                      value={itemText}
+                      options={options}
+                      onChange={(e: any) => setItemText(e)}
+                      // onChange={setValue}
+                    />
+                    {/* <Input
                       value={itemText}
                       // placeholder={`Enter a ${name}`}
-                      onChange={(e) => setItemText(e.target.value)}
                       prefix={<PiTagBold className="h-4 w-4" />}
                       className="w-full"
                     />
-                    <input type="hidden" />
+                    <input type="hidden" /> */}
                     <Button
                       onClick={handleItemAdd}
                       className="ms-4 shrink-0 text-sm @lg:ms-5"
@@ -227,7 +238,7 @@ export default function StepThree() {
                 </div>
               </div>
             ))}
-            <Modal
+            {/* <Modal
               isOpen={isDepartmentModalOpen}
               onClose={() => setIsDepartmentModalOpen(false)}
             >
@@ -239,7 +250,7 @@ export default function StepThree() {
                   <ActionIcon
                     size="sm"
                     variant="text"
-                    onClick={() => setIsTeamModalOpen(false)}
+                    onClick={() => setIsDepartmentModalOpen(false)}
                   >
                     <PiXBold className="h-5 w-5 text-base" />
                   </ActionIcon>
@@ -281,7 +292,7 @@ export default function StepThree() {
                   </div>
                 </div>
               </div>
-            </Modal>
+            </Modal> */}
           </section>
         </form>
       </div>
