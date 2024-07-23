@@ -19,13 +19,8 @@ export default function Congratulations() {
           />
           <figcaption className="mx-auto max-w-lg text-center">
             <h2 className="text-2xl text-white @7xl:text-3xl @[113rem]:text-4xl">
-              Congratulations on Adding Your Property!
+              Congratulations on Finishing Onboarding!
             </h2>
-            <p className="mt-6 text-base text-white">
-              Thank you for entrusting us with your property. Get ready for a
-              journey filled with new connections, incredible experiences, and
-              the joy of hosting guests from around the world.
-            </p>
           </figcaption>
         </figure>
         <Confetti className="!fixed mx-auto" width={width} height={height} />

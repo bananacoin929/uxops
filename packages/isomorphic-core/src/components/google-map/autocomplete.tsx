@@ -65,7 +65,7 @@ export default function Autocomplete({
     loader.importLibrary('maps').then(({ Map }) => {
       const autocompleteInstance = new google.maps.places.Autocomplete(
         inputRef.current as HTMLInputElement
-      );
+      ) ?? null;
       setAutocomplete(autocompleteInstance);
 
       autocompleteInstance.addListener('place_changed', () => {

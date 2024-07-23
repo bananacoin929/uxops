@@ -4,20 +4,14 @@ import { useEffect, useState } from 'react';
 import { useAtom } from 'jotai';
 import { toast } from 'react-hot-toast';
 import {
-  Switch,
   Checkbox,
-  Select,
-  SelectOption,
   Button,
   Input,
-  Textarea,
   ActionIcon,
   Text,
   Modal,
   CheckboxGroup,
 } from 'rizzui';
-import { PiXBold } from 'react-icons/pi';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import {
@@ -28,13 +22,15 @@ import {
   FormStep3Schema,
   formStep3Schema,
 } from '@/validators/onboarding-form.schema';
+import { PiPlusBold, PiXBold } from 'react-icons/pi';
+import { errorNotification } from '@/utils/notification';
 
 export default function StepThree() {
   const { step, gotoNextStep } = useStepperOne();
   const [formData, setFormData] = useAtom(formDataAtom);
 
   const [isDepartmentModalOpen, setIsDepartmentModalOpen] = useState(false);
-  const [modalData, setModalData] = useState<any>({});
+  const [departmentName, setDepartmentName] = useState<string>('');
 
   const {
     control,
@@ -55,28 +51,30 @@ export default function StepThree() {
   }, [errors]);
 
   const onSubmit: SubmitHandler<FormStep3Schema> = (data) => {
-    console.log('data', data, departments);
-    setFormData((prev) => ({
+    setFormData((prev: any) => ({
       ...prev,
       departments: data.departments,
       all_departments: departments,
+      departments_details: data.departments.map((it) => {
+        return { name: it, locations: [], total_teammembers: 0 };
+      }),
     }));
-    console.log('formData', formData);
     gotoNextStep();
   };
 
   const [departments, setDepartments] = useState(formData.all_departments);
 
-  const handleSaveDepartment = (department: any) => {
-    const updatedDepartment = {
-      id: departments.length + 1,
-      name: department.name,
-      value: department.value,
-      selected: false,
-    };
-    console.log(updatedDepartment);
-    setDepartments([...departments, updatedDepartment]);
-    setIsDepartmentModalOpen(false);
+  const handleSaveDepartment = () => {
+    if (departmentName) {
+      const updatedDepartment = {
+        id: departments.length + 1,
+        name: departmentName,
+        selected: false,
+      };
+      setDepartments([...departments, updatedDepartment]);
+      setDepartmentName('');
+      setIsDepartmentModalOpen(false);
+    } else errorNotification('Please enter the department name.');
   };
 
   return (
@@ -108,7 +106,8 @@ export default function StepThree() {
                       setIsDepartmentModalOpen(true);
                     }}
                   >
-                    Create Department
+                    <PiPlusBold className="me-1.5 h-4 w-4" />
+                    Add Department
                   </Button>
                 </div>
                 <Controller
@@ -131,7 +130,7 @@ export default function StepThree() {
                             }
                             className="col-span-4"
                             labelClassName="w-full"
-                            name={'home_type'}
+                            name={'department'}
                             value={item.name}
                           />
                         );
@@ -164,26 +163,9 @@ export default function StepThree() {
                   <div className="grid gap-2">
                     <Input
                       type="text"
-                      label="Department Name"
-                      value={modalData?.name}
-                      onChange={(e) =>
-                        setModalData({
-                          ...modalData,
-                          name: e.target.value,
-                        })
-                      }
-                      className="rounded-lg bg-background"
-                    />
-                    <Input
-                      type="text"
-                      label="Department Value"
-                      value={modalData?.value}
-                      onChange={(e) =>
-                        setModalData({
-                          ...modalData,
-                          value: e.target.value,
-                        })
-                      }
+                      placeholder="Department Name"
+                      value={departmentName}
+                      onChange={(e) => setDepartmentName(e.target.value)}
                       className="rounded-lg bg-background"
                     />
                   </div>
@@ -193,13 +175,13 @@ export default function StepThree() {
                     type="submit"
                     size="md"
                     className="col-span-2"
-                    onClick={() => handleSaveDepartment(modalData)}
+                    onClick={() => handleSaveDepartment()}
                   >
                     Save
                   </Button>
                   <Button
                     size="md"
-                    color="danger"
+                    variant="outline"
                     onClick={() => setIsDepartmentModalOpen(false)}
                   >
                     Cancel

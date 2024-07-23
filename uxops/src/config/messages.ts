@@ -75,6 +75,11 @@ export const messages = {
 
   companyNameIsRequired: 'Company Name is Required',
   industryIsRequired: 'Company Industry is Required',
-  mainLocationIsRequired: "Main Location is Required",
-  departmentsAreRequired: "Departments are Required"
+  mainLocationIsRequired: 'Main Location is Required',
+  departmentsAreRequired: 'Select the departments',
+  locationNameIsRequired: 'Location Name is Required',
+  totalEmployeesIsRequired: 'Total Number of Employees is Required',
+  totalTeamMembersIsRequired: 'Total Number of Team Members is Required',
+  publicCloudProviderIsRequired: 'Public Cloud Provider is Required',
+  departmentLocationIsRequired: 'Department Location Tags is Required',
 };

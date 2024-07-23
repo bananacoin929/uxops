@@ -20,12 +20,28 @@ export const formStep1Schema = z.object({
 export type FormStep1Schema = z.infer<typeof formStep1Schema>;
 
 // step 2
+export const locationSchema = z.object({
+  id: z.number(),
+  name: z.string().min(1, { message: messages.locationNameIsRequired }),
+  country: z.string().optional(),
+  state: z.string().optional(),
+  city: z.string().optional(),
+});
+
+export type LocationSchema = z.infer<typeof locationSchema>;
+
 export const formStep2Schema = z.object({
   company_name: z.string().min(1, messages.companyNameIsRequired),
-  industry: z.string({ required_error: messages.industryIsRequired }),
+  industry: z.string().nonempty({ message: messages.industryIsRequired }),
   main_location: z.string().min(1, messages.mainLocationIsRequired),
   secondary_location: z.string().optional(),
-  // situation: z.string().min(1, messages.situationIsRequired),
+  add_locations: z.array(locationSchema).optional(),
+  total_employees: z.number().min(1, messages.totalEmployeesIsRequired),
+  data_locations: z.array(locationSchema).optional(),
+  public_cloud_provider: z
+    .string()
+    .array()
+    .min(1, messages.publicCloudProviderIsRequired),
 });
 
 export type FormStep2Schema = z.infer<typeof formStep2Schema>;
@@ -34,8 +50,7 @@ export type FormStep2Schema = z.infer<typeof formStep2Schema>;
 
 export const departSchema = z.object({
   id: z.number(),
-  name: z.string(),
-  value: z.string(),
+  name: z.string().min(1, 'Please enter the department name.'),
   selected: z.boolean(),
 });
 
@@ -45,6 +60,55 @@ export const formStep3Schema = z.object({
   departments: z.string().array().min(1, messages.departmentsAreRequired),
   all_departments: z.array(departSchema).optional(),
 });
+
+// step 4
+
+export const detailLocationSchema = z.object({
+  label: z.string(),
+  value: z.number(),
+});
+
+export const departDetailSchema = z.object({
+  name: z.string(),
+  locations: z
+    .array(detailLocationSchema)
+    .min(1, messages.departmentLocationIsRequired),
+  total_teammembers: z.number().min(1, messages.totalTeamMembersIsRequired),
+});
+
+export type DepartDetailSchema = z.infer<typeof departDetailSchema>;
+
+export const formStep4Schema = z.object({
+  departments_details: z.array(departDetailSchema).optional(),
+});
+
+export type FormStep4Schema = z.infer<typeof formStep4Schema>;
+
+// step 5
+export const vendorSchema = z.object({
+  name: z.string(),
+  logo: z.string(),
+});
+
+export const productSchema = z.object({
+  id: z.number(),
+  vendor: vendorSchema,
+  category: z.string(),
+  description: z.string().min(1, messages.descriptionIsRequired),
+  name: z.string(),
+  isActive: z.boolean(),
+  department: z.string().array(),
+});
+
+export type ProductSchema = z.infer<typeof productSchema>;
+
+export const formStep5Schema = z.object({
+  products: z.array(productSchema).optional(),
+});
+
+export type FormStep5Schema = z.infer<typeof formStep5Schema>;
+
+/////////////////////////////
 
 export type FormStep3Schema = z.infer<typeof formStep3Schema>;
 
@@ -63,24 +127,24 @@ export const placeTypeSchema = z.object({
 export type PlaceTypeSchema = z.infer<typeof placeTypeSchema>;
 
 // step 4
-export const locationSchema = z.object({
-  address: z.string().optional(),
-  lat: z.number().optional(),
-  lng: z.number().optional(),
-});
+// export const locationSchema = z.object({
+//   address: z.string().optional(),
+//   lat: z.number().optional(),
+//   lng: z.number().optional(),
+// });
 
-export type LocationSchema = z.infer<typeof locationSchema>;
+// export type LocationSchema = z.infer<typeof locationSchema>;
 
 // step 5
-export const formStep5Schema = z.object({
-  guests: z.number().positive(),
-  bedrooms: z.number().positive().optional(),
-  beds: z.number().positive().optional(),
-  guestType: z.string().min(1, messages.thisFieldIsRequired),
-  bedroomLock: z.string().min(1, messages.thisFieldIsRequired),
-});
+// export const formStep5Schema = z.object({
+//   guests: z.number().positive(),
+//   bedrooms: z.number().positive().optional(),
+//   beds: z.number().positive().optional(),
+//   guestType: z.string().min(1, messages.thisFieldIsRequired),
+//   bedroomLock: z.string().min(1, messages.thisFieldIsRequired),
+// });
 
-export type FormStep5Schema = z.infer<typeof formStep5Schema>;
+// export type FormStep5Schema = z.infer<typeof formStep5Schema>;
 
 // step 6
 export const formStep6Schema = z.object({
