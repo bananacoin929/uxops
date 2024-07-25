@@ -247,7 +247,7 @@ export enum Step {
   StepSeven,
 }
 
-const firstStep = Step.StepOne;
+const firstStep = Step.StepZero;
 export const stepperAtomOne = atomWithReset<Step>(firstStep);
 export const isClickedFooterSubmitButtonAtom = atom(false);
 export const isSaveLoading = atom(false);
