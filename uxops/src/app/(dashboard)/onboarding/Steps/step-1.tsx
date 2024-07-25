@@ -57,7 +57,7 @@ export default function StepTwo() {
       email: data.email,
       phone: data.phone,
     }));
-    gotoNextStep();
+    gotoNextStep({});
   };
 
   return (

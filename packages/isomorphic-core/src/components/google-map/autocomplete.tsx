@@ -1,11 +1,11 @@
-import { useAtomValue } from 'jotai';
-import { useTheme } from 'next-themes';
-import { Loader } from '@googlemaps/js-api-loader';
-import { useEffect, useRef, useState } from 'react';
-import { atomWithReset, useResetAtom } from 'jotai/utils';
-import { Input, InputProps, Loader as Spinner } from 'rizzui';
-import cn from '../../utils/class-names';
-import { darkMode } from '../google-map/map-styles';
+import { useAtomValue } from "jotai";
+import { useTheme } from "next-themes";
+import { Loader } from "@googlemaps/js-api-loader";
+import { useEffect, useRef, useState } from "react";
+import { atomWithReset, useResetAtom } from "jotai/utils";
+import { Input, InputProps, Loader as Spinner } from "rizzui";
+import cn from "../../utils/class-names";
+import { darkMode } from "../google-map/map-styles";
 
 export type Location = {
   address: string;
@@ -22,10 +22,11 @@ interface GoogleMapsAutocompleteProps {
   inputProps?: InputProps;
   spinnerClassName?: string;
   onPlaceSelect: (place: Location) => void;
+  value?: string;
 }
 
 export const locationAtom = atomWithReset<Location>({
-  address: '',
+  address: "",
   lat: -3.745,
   lng: -38.523,
 });
@@ -39,13 +40,14 @@ export default function Autocomplete({
   inputProps,
   onPlaceSelect,
   spinnerClassName,
+  value,
 }: GoogleMapsAutocompleteProps) {
   // check for dark mode
   const { theme } = useTheme();
   // global location state
   const location = useAtomValue(locationAtom);
   // to handle / clear input state
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(value ? value : "");
   // map loading state
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // to reset location
@@ -58,17 +60,18 @@ export default function Autocomplete({
   useEffect(() => {
     const loader = new Loader({
       apiKey,
-      version: 'weekly',
-      libraries: ['places'],
+      version: "weekly",
+      libraries: ["places"],
     });
 
-    loader.importLibrary('maps').then(({ Map }) => {
-      const autocompleteInstance = new google.maps.places.Autocomplete(
-        inputRef.current as HTMLInputElement
-      ) ?? null;
+    loader.importLibrary("maps").then(({ Map }) => {
+      const autocompleteInstance =
+        new google.maps.places.Autocomplete(
+          inputRef.current as HTMLInputElement
+        ) ?? null;
       setAutocomplete(autocompleteInstance);
 
-      autocompleteInstance.addListener('place_changed', () => {
+      autocompleteInstance.addListener("place_changed", () => {
         const selectedPlace =
           autocompleteInstance.getPlace() as google.maps.places.PlaceResult;
         handlePlaceSelect(selectedPlace);
@@ -84,7 +87,7 @@ export default function Autocomplete({
           zoom: 15,
           mapTypeControl: false,
           fullscreenControl: false,
-          ...(theme === 'dark' && {
+          ...(theme === "dark" && {
             styles: darkMode,
           }),
         });
@@ -99,7 +102,7 @@ export default function Autocomplete({
       setInputValue(input);
 
       const autocompleteService = new google.maps.places.AutocompleteService();
-      autocompleteService.getPlacePredictions({ input, types: ['geocode'] });
+      autocompleteService.getPlacePredictions({ input, types: ["geocode"] });
     }
   };
 
@@ -124,7 +127,7 @@ export default function Autocomplete({
           value={inputValue}
           onClear={() => {
             resetLocation();
-            setInputValue('');
+            setInputValue("");
           }}
           onChange={handleInputChange}
           clearable={inputValue ? true : false}
@@ -142,7 +145,7 @@ export default function Autocomplete({
         <div
           id="map"
           ref={mapRef}
-          className={cn('h-full w-full', mapClassName)}
+          className={cn("h-full w-full", mapClassName)}
         />
       )}
     </div>

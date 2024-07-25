@@ -38,8 +38,7 @@ export default function SignInForm() {
       await refetchUserProfile({ isFreshData: true });
       setGlobalInLocal(JSON.stringify(userProfile));
       successNotification('Welcome to our homepage!');
-      if (userProfile?.is_onboarding === false) router.replace('/onboarding');
-      else router.replace('/');
+      router.push('/');
     }
   };
 

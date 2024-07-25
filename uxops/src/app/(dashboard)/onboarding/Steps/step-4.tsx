@@ -13,13 +13,23 @@ import { PiXBold, PiCheckBold } from 'react-icons/pi';
 import {
   FormStep4Schema,
   formStep4Schema,
-  LocationSchema,
 } from '@/validators/onboarding-form.schema';
 
 export default function StepThree() {
   const { step, gotoNextStep } = useStepperOne();
   const [formData, setFormData] = useAtom(formDataAtom);
-  const [officeOptions, setOfficeOptions] = useState([]);
+
+  let options: any[] = [];
+  formData.locations.map((lo, inde: number) => {
+    if (lo.type === 'MAIN') options.push({ label: 'Main Office', value: inde });
+    else if (lo.type === 'SECONDARY') {
+      if (lo.address !== '')
+        options.push({
+          label: 'Secondary Office',
+          value: inde,
+        });
+    } else options.push({ label: lo.name, value: inde });
+  });
 
   const {
     control,
@@ -33,34 +43,12 @@ export default function StepThree() {
       departments_details: formData.departments_details,
     },
   });
-
-  useEffect(() => {
-    let options: any = [];
-    if (formData.main_location)
-      options.push({ label: 'Main Office', value: -1 });
-    if (formData.secondary_location)
-      options.push({
-        label: 'Secondary Office',
-        value: -2,
-      });
-    if (formData.add_locations?.length)
-      formData.add_locations.map((item: LocationSchema) =>
-        options.push({ label: item.name, value: item.id })
-      );
-    setOfficeOptions(options);
-  }, [
-    formData.add_locations,
-    formData.main_location,
-    formData.secondary_location,
-  ]);
-
   const onSubmit: SubmitHandler<FormStep4Schema> = (data) => {
-    console.log('data', data);
     setFormData((prev) => ({
       ...prev,
       departments_details: data.departments_details,
     }));
-    gotoNextStep();
+    gotoNextStep({ departments_details: data.departments_details });
   };
 
   return (
@@ -127,18 +115,26 @@ export default function StepThree() {
                           <Select
                             multiple
                             label="Department Locations"
-                            placeholder='Select the department locations'
+                            placeholder="Select the department locations"
                             className={'col-span-full'}
-                            options={officeOptions}
+                            options={options}
                             error={
                               (errors.departments_details as any)?.[index]
                                 ?.locations?.message as string
                             }
                             displayValue={(selected: any) => {
-                              return selected
-                                .map((it: any) => it.label)
-                                .join(', ');
+                              let display: string[] = [];
+                              selected
+                                .sort((a: number, b: number) => a - b)
+                                .map((sel: number) =>
+                                  display.push(
+                                    options.find((op: any) => op.value === sel)
+                                      ?.label ?? ''
+                                  )
+                                );
+                              return display.join(', ');
                             }}
+                            getOptionValue={(option) => option.value}
                             getOptionDisplayValue={(option: {
                               value: any;
                               label: any;
@@ -146,9 +142,9 @@ export default function StepThree() {
                               return (
                                 <div className="flex w-full items-center gap-5">
                                   {option.label}
-                                  {department.locations.filter(
-                                    (lo: any) => lo.value === option.value
-                                  )?.length ? (
+                                  {department.locations.find(
+                                    (lo: number) => lo === option.value
+                                  ) !== undefined ? (
                                     <PiCheckBold className="h-3.5 w-3.5" />
                                   ) : (
                                     ''
@@ -158,23 +154,12 @@ export default function StepThree() {
                             }}
                             value={department.locations}
                             onChange={(e: any) => {
-                              console.log(e);
                               let updateData = value?.map(
                                 (it: any, ind: number) => {
                                   if (ind === index) {
-                                    const mergedArray = it.locations.concat(
-                                      e.filter(
-                                        (item2: any) =>
-                                          !it.locations.some(
-                                            (item1: any) =>
-                                              item1.label === item2.label &&
-                                              item1.value === item2.value
-                                          )
-                                      )
-                                    );
                                     return {
                                       ...it,
-                                      locations: mergedArray,
+                                      locations: e,
                                     };
                                   } else return it;
                                 }
@@ -184,40 +169,43 @@ export default function StepThree() {
                           />
                           {department.locations.length > 0 && (
                             <div className="mt-3 flex flex-wrap gap-2">
-                              {department.locations.map((text: any) => (
-                                <div
-                                  key={text?.value}
-                                  className="flex items-center rounded-full border border-gray-300 py-1 pe-2.5 ps-3 text-sm font-medium text-gray-700"
-                                >
-                                  {text?.label}
-                                  <button
-                                    onClick={() => {
-                                      let updateData = value?.map(
-                                        (it: any, ind: number) => {
-                                          if (ind === index) {
-                                            let updatelocations =
-                                              it.locations.filter(
-                                                (loc: any) =>
-                                                  loc?.value !== text?.value
-                                              );
-                                            return {
-                                              ...it,
-                                              locations: updatelocations,
-                                            };
-                                          } else return it;
-                                        }
-                                      );
-                                      setValue(
-                                        'departments_details',
-                                        updateData
-                                      );
-                                    }}
-                                    className="ps-2 text-gray-500 hover:text-gray-900"
+                              {department.locations
+                                .sort((a: number, b: number) => a - b)
+                                .map((text: any) => (
+                                  <div
+                                    key={text?.value}
+                                    className="flex items-center rounded-full border border-gray-300 py-1 pe-2.5 ps-3 text-sm font-medium text-gray-700"
                                   >
-                                    <PiXBold className="h-3.5 w-3.5" />
-                                  </button>
-                                </div>
-                              ))}
+                                    {options.find(
+                                      (op: any) => op.value === text
+                                    )?.label ?? ''}
+                                    <button
+                                      onClick={() => {
+                                        let updateData = value?.map(
+                                          (it: any, ind: number) => {
+                                            if (ind === index) {
+                                              let updatelocations =
+                                                it.locations.filter(
+                                                  (loc: any) => loc !== text
+                                                );
+                                              return {
+                                                ...it,
+                                                locations: updatelocations,
+                                              };
+                                            } else return it;
+                                          }
+                                        );
+                                        setValue(
+                                          'departments_details',
+                                          updateData
+                                        );
+                                      }}
+                                      className="ps-2 text-gray-500 hover:text-gray-900"
+                                    >
+                                      <PiXBold className="h-3.5 w-3.5" />
+                                    </button>
+                                  </div>
+                                ))}
                             </div>
                           )}
                         </div>

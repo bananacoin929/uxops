@@ -59,7 +59,13 @@ export default function StepThree() {
         return { name: it, locations: [], total_teammembers: 0 };
       }),
     }));
-    gotoNextStep();
+    gotoNextStep({
+      departments: data.departments,
+      all_departments: departments,
+      departments_details: data.departments.map((it) => {
+        return { name: it, locations: [], total_teammembers: 0 };
+      }),
+    });
   };
 
   const [departments, setDepartments] = useState(formData.all_departments);
