@@ -242,7 +242,7 @@ export enum Step {
   StepTwo,
   StepThree,
   StepFour,
-  StepFive,
+  // StepFive,
   StepSix,
   StepSeven,
 }
@@ -346,46 +346,46 @@ export function useStepperOne() {
             index++;
           }
         }
-        if (step > 4 && onboardingData.products.length) {
-          let org_products = onboardingData.products.filter(
-            (pro: any) => pro.isActive === true
-          );
-          console.log('****org_products', org_products);
-          for (const item of org_products) {
-            const { data: org_product } = await createOrgProduct({
-              org_id: organizationData.id,
-              product_id: item.id,
-            });
-            console.log('****org_product', org_product);
-            if (org_product) {
-              if (item.department.find((val: number) => val === -1))
-                for (const it of org_departments) {
-                  const { error } = await createOrgProductDepartment({
-                    org_product_id: org_product.id,
-                    org_dep_id: it.id,
-                  });
-                  console.log('****org_product_dep Error', error, {
-                    org_product_id: org_product.id,
-                    org_dep_id: it.id,
-                  });
-                }
-              else {
-                for (const it of item.department) {
-                  const { error: onlyError } = await createOrgProductDepartment(
-                    {
-                      org_product_id: org_product.id,
-                      org_dep_id: org_departments[it].id,
-                    }
-                  );
-                  console.log('****org_product_dep Error', onlyError, {
-                    org_product_id: org_product.id,
-                    org_dep_id: org_departments[it].id,
-                  });
-                }
-              }
-            }
-          }
-        }
+        // if (step > 4 && onboardingData.products.length) {
+        //   let org_products = onboardingData.products.filter(
+        //     (pro: any) => pro.isActive === true
+        //   );
+        //   console.log('****org_products', org_products);
+        //   for (const item of org_products) {
+        //     const { data: org_product } = await createOrgProduct({
+        //       org_id: organizationData.id,
+        //       product_id: item.id,
+        //     });
+        //     console.log('****org_product', org_product);
+        //     if (org_product) {
+        //       if (item.department.find((val: number) => val === -1))
+        //         for (const it of org_departments) {
+        //           const { error } = await createOrgProductDepartment({
+        //             org_product_id: org_product.id,
+        //             org_dep_id: it.id,
+        //           });
+        //           console.log('****org_product_dep Error', error, {
+        //             org_product_id: org_product.id,
+        //             org_dep_id: it.id,
+        //           });
+        //         }
+        //       else {
+        //         for (const it of item.department) {
+        //           const { error: onlyError } = await createOrgProductDepartment(
+        //             {
+        //               org_product_id: org_product.id,
+        //               org_dep_id: org_departments[it].id,
+        //             }
+        //           );
+        //           console.log('****org_product_dep Error', onlyError, {
+        //             org_product_id: org_product.id,
+        //             org_dep_id: org_departments[it].id,
+        //           });
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
         setIsLoading(false);
         successNotification('Onboarding Steps is saved.');
         router.push(routes.main);
@@ -417,7 +417,7 @@ const MAP_STEP_TO_COMPONENT = {
   [Step.StepTwo]: StepTwo,
   [Step.StepThree]: StepThree,
   [Step.StepFour]: StepFour,
-  [Step.StepFive]: StepFive,
+  // [Step.StepFive]: StepFive,
   [Step.StepSix]: StepSix,
   [Step.StepSeven]: Congratulations,
 };

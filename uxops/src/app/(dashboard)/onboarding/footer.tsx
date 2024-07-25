@@ -22,14 +22,14 @@ interface FooterProps {
 }
 
 function buttonLabel(formId?: number) {
-  if (formId === 6) {
+  if (formId === 5) {
     return (
       <>
         Submit <PiCheck />
       </>
     );
   }
-  if (formId === 7) {
+  if (formId === 6) {
     return 'Back to Home';
   }
   return (
@@ -56,7 +56,7 @@ export default function Footer({ isLoading, className }: FooterProps) {
   }, [pathname, searchParams]);
 
   function buttonAttr() {
-    if (step === 7) {
+    if (step === 6) {
       return {
         onClick: () => push('/'),
       };
