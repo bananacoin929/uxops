@@ -38,7 +38,7 @@ export default function Header({ className }: FooterProps) {
   };
 
   function buttonAttr() {
-    if (step === 7) {
+    if (step === 6) {
       return {
         onClick: () => push('/'),
       };
@@ -67,7 +67,7 @@ export default function Header({ className }: FooterProps) {
         {/* <Button variant="text" className="text-white hover:enabled:text-white">
           Questions?
         </Button> */}
-        {step > 1 && step < 7 ? (
+        {step > 1 && step < 6 ? (
           <Button
             {...buttonAttr()}
             type={'submit'}
