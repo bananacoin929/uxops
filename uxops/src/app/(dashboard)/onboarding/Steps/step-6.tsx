@@ -1,18 +1,12 @@
 'use client';
 
-import { useAtom } from 'jotai';
-import { SubmitHandler } from 'react-hook-form';
-import {
-  formDataAtom,
-  useStepperOne,
-} from '@/app/(dashboard)/onboarding/Steps';
+import { useStepperOne } from '@/app/(dashboard)/onboarding/Steps';
 
 export default function StepTwo() {
-  const [formData, setFormData] = useAtom(formDataAtom);
   const { step, gotoNextStep } = useStepperOne();
 
   const onSubmit = () => {
-    gotoNextStep();
+    gotoNextStep({});
   };
 
   return (

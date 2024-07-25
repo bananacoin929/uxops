@@ -33,16 +33,18 @@ export default function StepFour() {
     },
   });
 
+  const options: any[] = [{ label: 'Company Wide', value: -1 }];
+  formData.departments?.forEach((it: string, index) => {
+    options.push({ label: it, value: index });
+  });
+
   const onSubmit: SubmitHandler<FormStep5Schema> = (data) => {
-    console.log('data', data);
-    console.log(formData);
     setFormData((prev: any) => ({
       ...prev,
       products: data.products,
     }));
-    gotoNextStep();
+    gotoNextStep({ products: data.products });
   };
-
   return (
     <>
       <div className=" w-0 @5xl:col-span-1" />
@@ -75,8 +77,9 @@ export default function StepFour() {
                     <div
                       key={product.id}
                       className={`overflow-hidden rounded-lg bg-white shadow-lg dark:bg-gray-950 ${
-                        'border-2 border-green-500 dark:border-green-500'
-                        // : 'border-2 border-gray-200 dark:border-gray-800'
+                        product.isActive === true
+                          ? 'border-2 border-green-500 dark:border-green-500'
+                          : 'border-2 border-gray-200 dark:border-gray-800'
                       }`}
                     >
                       <div className="flex w-full items-center justify-between gap-4 border-b p-4 dark:border-gray-800">
@@ -92,13 +95,23 @@ export default function StepFour() {
                             {product.vendor.name}
                           </span>
                         </div>
-                        <Button>Integrate</Button>
-                        {/* <Switch
-                      id={`product-${product.id}-toggle`}
-                      className="ml-auto"
-                      defaultChecked={product.isActive}
-                      onChange={() => toggleProductStatus(product.id)}
-                    /> */}
+                        <Switch
+                          className="ml-auto"
+                          defaultChecked={product.isActive}
+                          onChange={(e) => {
+                            let updateData = value?.map(
+                              (it: any, ind: number) => {
+                                if (ind === index) {
+                                  return {
+                                    ...it,
+                                    isActive: e.target.checked,
+                                  };
+                                } else return it;
+                              }
+                            );
+                            setValue('products', updateData);
+                          }}
+                        />
                       </div>
                       <div className="p-4">
                         <h3 className="mb-2 text-lg font-semibold">
@@ -124,17 +137,24 @@ export default function StepFour() {
                               multiple
                               placeholder="Select the departments"
                               className={'col-span-full w-full'}
-                              options={
-                                formData.departments?.map((it: string) => {
-                                  return { label: it, value: it };
-                                }) ?? []
-                              }
+                              options={options}
                               error={
                                 (errors.products as any)?.[index]?.department
                                   ?.message as string
                               }
                               displayValue={(selected: any) => {
-                                return selected.map((it: any) => it).join(', ');
+                                let display: string[] = [];
+                                selected
+                                  .sort((a: number, b: number) => a - b)
+                                  .map((it: number) => {
+                                    if (it === -1) display.push('Company Wide');
+                                    else
+                                      display.push(
+                                        options.find((op) => op.value === it)
+                                          ?.label ?? ''
+                                      );
+                                  });
+                                return display.join(', ');
                               }}
                               getOptionValue={(option) => option.value}
                               getOptionDisplayValue={(option: {
@@ -144,9 +164,9 @@ export default function StepFour() {
                                 return (
                                   <div className="flex w-full items-center gap-5">
                                     {option.label}
-                                    {product.department.filter(
-                                      (lo: any) => lo === option.value
-                                    )?.length ? (
+                                    {product.department.find(
+                                      (lo: number) => lo === option.value
+                                    ) !== undefined ? (
                                       <PiCheckBold className="h-3.5 w-3.5" />
                                     ) : (
                                       ''
@@ -159,16 +179,9 @@ export default function StepFour() {
                                 let updateData = value?.map(
                                   (it: any, ind: number) => {
                                     if (ind === index) {
-                                      const mergedArray = it.department.concat(
-                                        e.filter(
-                                          (item: any) =>
-                                            !it.department.includes(item)
-                                        )
-                                      );
-
                                       return {
                                         ...it,
-                                        department: mergedArray,
+                                        department: e,
                                       };
                                     } else return it;
                                   }
@@ -178,12 +191,13 @@ export default function StepFour() {
                             />
                             {product.department.length > 0 && (
                               <div className="mt-3 flex flex-wrap gap-2">
-                                {product.department.map((text: any, index) => (
+                                {product.department.map((text: any) => (
                                   <div
-                                    key={index}
+                                    key={text}
                                     className="flex items-center rounded-full border border-gray-300 py-1 pe-2.5 ps-3 text-sm font-medium text-gray-700"
                                   >
-                                    {text}
+                                    {options.find((op) => op.value === text)
+                                      ?.label ?? ''}
                                     <button
                                       onClick={() => {
                                         let updateData = value?.map(
@@ -191,8 +205,7 @@ export default function StepFour() {
                                             if (ind === index) {
                                               let updateDepartment =
                                                 it.department.filter(
-                                                  (loc: any) =>
-                                                    loc?.value !== text?.value
+                                                  (loc: number) => loc !== text
                                                 );
                                               return {
                                                 ...it,

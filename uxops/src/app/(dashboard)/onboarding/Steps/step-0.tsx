@@ -6,20 +6,20 @@ const Steps = [
   {
     name: 'Admin Info',
     description:
-      'We ’ll ask you a few more questions about your organization admin info',
+      'We’ll ask you a few more questions about your organization admin info.',
   },
   {
     name: 'Organization Info',
-    description: 'We ’ll ask you a few more question about organization.',
+    description: 'We’ll ask you a few more question about organization.',
   },
   {
     name: 'Department Info',
     description:
-      'We ’ll ask you a few more question about your organization departments.',
+      'We’ll ask you a few more question about your organization departments.',
   },
   {
     name: 'Products',
-    description: 'We ’ll ask you a few more question about products.',
+    description: 'We’ll ask you a few more question about products.',
   },
 ];
 
@@ -27,7 +27,7 @@ export default function StepZero() {
   const { step, gotoNextStep } = useStepperOne();
 
   const onSubmit = () => {
-    gotoNextStep();
+    gotoNextStep({});
   };
 
   return (

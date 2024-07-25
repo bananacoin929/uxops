@@ -23,6 +23,8 @@ import { Element } from 'react-scroll';
 import {
   formStep2Schema,
   FormStep2Schema,
+  LocationSchema,
+  RealLocationSchema,
 } from '@/validators/onboarding-form.schema';
 
 const MAP_STEP_TO_COMPONENT = {
@@ -53,11 +55,48 @@ export default function StepTwo() {
   });
 
   const onSubmit: SubmitHandler<FormStep2Schema> = (data) => {
-    console.log(data);
+    let add: RealLocationSchema[] =
+      data.add_locations?.map((it: LocationSchema) => {
+        return {
+          type: 'ADD',
+          address: undefined,
+          name: it.name,
+          country: it.country,
+          state: it.state,
+        };
+      }) ?? [];
+    let dataCenter: RealLocationSchema[] =
+      data.data_locations?.map((it: LocationSchema) => {
+        return {
+          type: 'DATA_CENTER',
+          address: undefined,
+          name: it.name,
+          country: it.country,
+          state: it.state,
+        };
+      }) ?? [];
     setFormData((prev: any) => ({
       ...prev,
       company_name: data.company_name,
       industry: data.industry,
+      locations: [
+        {
+          type: 'MAIN',
+          address: data.main_location,
+          name: null,
+          country: null,
+          state: null,
+        },
+        {
+          type: 'SECONDARY',
+          address: data.secondary_location,
+          name: null,
+          country: null,
+          state: null,
+        },
+        ...add,
+        ...dataCenter,
+      ],
       main_location: data.main_location,
       secondary_location: data.secondary_location,
       add_locations: data.add_locations,
@@ -65,7 +104,34 @@ export default function StepTwo() {
       data_locations: data.data_locations,
       public_cloud_provider: data.public_cloud_provider,
     }));
-    gotoNextStep();
+    gotoNextStep({
+      company_name: data.company_name,
+      industry: data.industry,
+      locations: [
+        {
+          type: 'MAIN',
+          address: data.main_location,
+          name: null,
+          country: null,
+          state: null,
+        },
+        {
+          type: 'SECONDARY',
+          address: data.secondary_location,
+          name: null,
+          country: null,
+          state: null,
+        },
+        ...add,
+        ...dataCenter,
+      ],
+      main_location: data.main_location,
+      secondary_location: data.secondary_location,
+      add_locations: data.add_locations,
+      total_employees: data.total_employees,
+      data_locations: data.data_locations,
+      public_cloud_provider: data.public_cloud_provider,
+    });
   };
 
   return (

@@ -2,6 +2,23 @@ import { z } from 'zod';
 import { messages } from '@/config/messages';
 import { fileSchema } from './common-rules';
 
+export const realLocationSchema = z.object({
+  type: z.string(),
+  address: z
+    .string()
+    .min(1, { message: messages.mainLocationIsRequired })
+    .optional(),
+  name: z
+    .string()
+    .min(1, { message: messages.locationNameIsRequired })
+    .optional(),
+  country: z.string().optional(),
+  state: z.string().optional(),
+  city: z.string().optional(),
+});
+
+export type RealLocationSchema = z.infer<typeof realLocationSchema>;
+
 // Step 1
 export const formStep1Schema = z.object({
   first_name: z.string().min(1, messages.firstNameRequired),
@@ -32,14 +49,14 @@ export type LocationSchema = z.infer<typeof locationSchema>;
 
 export const formStep2Schema = z.object({
   company_name: z.string().min(1, messages.companyNameIsRequired),
-  industry: z.string().nonempty({ message: messages.industryIsRequired }),
+  industry: z.number().min(1, messages.industryIsRequired),
   main_location: z.string().min(1, messages.mainLocationIsRequired),
   secondary_location: z.string().optional(),
   add_locations: z.array(locationSchema).optional(),
   total_employees: z.number().min(1, messages.totalEmployeesIsRequired),
   data_locations: z.array(locationSchema).optional(),
   public_cloud_provider: z
-    .string()
+    .number()
     .array()
     .min(1, messages.publicCloudProviderIsRequired),
 });
@@ -63,16 +80,9 @@ export const formStep3Schema = z.object({
 
 // step 4
 
-export const detailLocationSchema = z.object({
-  label: z.string(),
-  value: z.number(),
-});
-
 export const departDetailSchema = z.object({
   name: z.string(),
-  locations: z
-    .array(detailLocationSchema)
-    .min(1, messages.departmentLocationIsRequired),
+  locations: z.number().array().min(1, messages.departmentLocationIsRequired),
   total_teammembers: z.number().min(1, messages.totalTeamMembersIsRequired),
 });
 
@@ -97,7 +107,7 @@ export const productSchema = z.object({
   description: z.string().min(1, messages.descriptionIsRequired),
   name: z.string(),
   isActive: z.boolean(),
-  department: z.string().array(),
+  department: z.number().array(),
 });
 
 export type ProductSchema = z.infer<typeof productSchema>;
