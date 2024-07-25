@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useSetAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useResetAtom } from 'jotai/utils';
 import { PiArrowUpLight, PiCheck } from 'react-icons/pi';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -10,6 +10,7 @@ import cn from '@utils/class-names';
 import {
   formDataAtom,
   initialFormData,
+  isClickedFooterSubmitButtonAtom,
   stepperAtomOne,
   useStepperOne,
 } from '@/app/(dashboard)/onboarding/Steps';
@@ -43,9 +44,9 @@ export default function Footer({ isLoading, className }: FooterProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const setFormData = useSetAtom(formDataAtom);
+  const [, setIsClickedFooterSubmitButton] = useAtom(isClickedFooterSubmitButtonAtom)
   const { step, gotoPrevStep } = useStepperOne();
 
-  console.log('*********step', step);
   const resetLocation = useResetAtom(stepperAtomOne);
 
   useEffect(() => {
@@ -62,7 +63,7 @@ export default function Footer({ isLoading, className }: FooterProps) {
     }
     return { form: `rhf-${step?.toString()}` };
   }
-  console.log('****footer', step);
+
   return (
     <footer
       className={cn(
@@ -85,9 +86,9 @@ export default function Footer({ isLoading, className }: FooterProps) {
         isLoading={isLoading}
         disabled={isLoading}
         rounded="pill"
-        color='secondary'
         {...buttonAttr()}
         type={'submit'}
+        onClick={() => setIsClickedFooterSubmitButton(true)}
         className="ml-auto gap-1 bg-primary backdrop-blur-lg dark:bg-gray-0/[.35] dark:text-white dark:active:enabled:bg-gray-0/75"
       >
         {buttonLabel(step)}

@@ -5,11 +5,11 @@ import FormGroup from '@/app/shared/from-group-onboarding';
 
 const typeOption = [
   {
-    value: 'digital product',
+    value: 1,
     label: 'Digital Product',
   },
   {
-    value: 'physical product',
+    value: 2,
     label: 'Physical Product',
   },
 ];
@@ -39,6 +39,9 @@ export default function CompanyIndustry({ className }: { className?: string }) {
             onChange={onChange}
             error={errors?.industry?.message as string}
             getOptionValue={(option) => option.value}
+            displayValue={(selected: any) =>
+              typeOption?.find((p: any) => p.value === selected)?.label ?? ''
+            }
           />
         )}
       />

@@ -1,8 +1,9 @@
 'use client';
 
-import { useAtom } from 'jotai';
+import { atom, useAtom } from 'jotai';
 import { atomWithReset, atomWithStorage } from 'jotai/utils';
 import cn from '@utils/class-names';
+import Header from '@/app/(dashboard)/onboarding/header';
 import Footer from '@/app/(dashboard)/onboarding/footer';
 import StepZero from '@/app/(dashboard)/onboarding/Steps/step-0';
 import StepOne from '@/app/(dashboard)/onboarding/Steps/step-1';
@@ -17,7 +18,22 @@ import {
   DepartSchema,
   LocationSchema,
   ProductSchema,
+  RealLocationSchema,
 } from '@/validators/onboarding-form.schema';
+import { useState } from 'react';
+import { createOrganization } from '@/utils/organizations';
+import { useUserProfile } from '@/lib/providers/user-profile-provider';
+import { createOrgAdmin } from '@/utils/org_admins';
+import { createOrgDepartment } from '@/utils/org_departments';
+import { createOrgCloudProvider } from '@/utils/org_cloud_providers';
+import { createDepDetail } from '@/utils/dep_details';
+import { createDepDetailLocation } from '@/utils/dep_detail_locations';
+import { createOrgLocation } from '@/utils/org_locations';
+import { createOrgProduct } from '@/utils/org_products';
+import { createOrgProductDepartment } from '@/utils/org_proudct_departments';
+import { successNotification } from '@/utils/notification';
+import { useRouter } from 'next/navigation';
+import { routes } from '@/config/routes';
 
 type FormDataType = {
   first_name: string;
@@ -25,17 +41,18 @@ type FormDataType = {
   email: string;
   phone: string;
   company_name: string;
-  industry: string;
+  industry: number | undefined;
   main_location: string;
   secondary_location: string;
   add_locations: LocationSchema[];
   total_employees: number;
   data_locations: LocationSchema[];
-  public_cloud_provider: string[];
+  public_cloud_provider: number[];
   departments: string[] | undefined;
   all_departments: DepartSchema[];
   departments_details: DepartDetailSchema[] | undefined;
   products: ProductSchema[];
+  locations: RealLocationSchema[];
 };
 
 export const initialFormData = {
@@ -44,14 +61,13 @@ export const initialFormData = {
   email: '',
   phone: '',
   company_name: '',
-  industry: '',
+  industry: undefined,
   main_location: '',
   secondary_location: '',
   add_locations: [],
   total_employees: 0,
   data_locations: [],
   public_cloud_provider: [],
-
   departments: [],
   all_departments: [
     {
@@ -211,6 +227,8 @@ export const initialFormData = {
       department: [],
     },
   ],
+
+  locations: [],
 };
 
 export const formDataAtom = atomWithStorage<FormDataType>(
@@ -229,17 +247,153 @@ export enum Step {
   StepSeven,
 }
 
-const firstStep = Step.StepZero;
+const firstStep = Step.StepOne;
 export const stepperAtomOne = atomWithReset<Step>(firstStep);
+export const isClickedFooterSubmitButtonAtom = atom(false);
+export const isSaveLoading = atom(false);
 
 export function useStepperOne() {
+  const { userProfile } = useUserProfile();
+  const router = useRouter();
   const [step, setStep] = useAtom(stepperAtomOne);
+  const [formData] = useAtom(formDataAtom);
+  const [isClickedFooterSubmitButton, setIsClickedFooterSubmitButton] = useAtom(
+    isClickedFooterSubmitButtonAtom
+  );
+  const [, setIsLoading] = useAtom(isSaveLoading);
 
-  // function gotoStep(step: Step) {
-  //   setStep(step);
-  // }
-  function gotoNextStep() {
-    setStep(step + 1);
+  async function gotoNextStep(data: any) {
+    if (isClickedFooterSubmitButton === true) {
+      setStep(step + 1);
+      setIsClickedFooterSubmitButton(false);
+    } else {
+      setIsLoading(true);
+      const onboardingData = {
+        ...formData,
+        ...data,
+      };
+      console.log('onboardingData', onboardingData);
+      let organizationData: any = undefined;
+      let org_departments: any[] = [];
+      let org_locations: any[] = [];
+      try {
+        if (step > 1) {
+          const { data: organization } = await createOrganization({
+            user_id: userProfile?.id,
+            name: onboardingData.company_name,
+            industry_id: onboardingData.industry,
+            total_employees: onboardingData.total_employees,
+          });
+          if (organization) {
+            console.log('****organization', organization);
+            organizationData = organization;
+            const { data: org_admin } = await createOrgAdmin({
+              org_id: organization.id,
+              first_name: onboardingData.first_name,
+              last_name: onboardingData.last_name,
+              email: onboardingData.email,
+              phone: onboardingData.phone,
+            });
+            console.log('****org_admin', org_admin);
+            for (const item of onboardingData.locations) {
+              const { data: org_location } = await createOrgLocation({
+                org_id: organization.id,
+                type: item.type,
+                address: item.address,
+                name: item.name,
+                country: item.country,
+                state: item.state,
+                city: item.city,
+              });
+              org_location && org_locations.push(org_location);
+            }
+            console.log('****org_locations', org_locations);
+            for (const item of onboardingData.public_cloud_provider) {
+              await createOrgCloudProvider({
+                org_id: organizationData.id,
+                provider_id: item,
+              });
+            }
+          }
+        }
+        if (step > 2 && organizationData) {
+          for (const depart of onboardingData.departments) {
+            const { data: org_department } = await createOrgDepartment({
+              org_id: organizationData.id,
+              name: depart,
+            });
+            org_departments.push(org_department);
+          }
+          console.log('****org_departments', org_departments);
+        }
+        if (step > 3 && org_departments.length) {
+          let index = 0;
+          for (const item of org_departments) {
+            const { data: dep_detail } = await createDepDetail({
+              org_dep_id: item.id,
+              total_members:
+                onboardingData.departments_details[index].total_teammembers,
+            });
+            if (dep_detail) {
+              for (const it of onboardingData.departments_details[index]
+                .locations) {
+                await createDepDetailLocation({
+                  dep_detail_id: dep_detail.id,
+                  location_id: org_locations[it].id,
+                });
+              }
+            }
+            index++;
+          }
+        }
+        if (step > 4 && onboardingData.products.length) {
+          let org_products = onboardingData.products.filter(
+            (pro: any) => pro.isActive === true
+          );
+          console.log('****org_products', org_products);
+          for (const item of org_products) {
+            const { data: org_product } = await createOrgProduct({
+              org_id: organizationData.id,
+              product_id: item.id,
+            });
+            console.log('****org_product', org_product);
+            if (org_product) {
+              if (item.department.find((val: number) => val === -1))
+                for (const it of org_departments) {
+                  const { error } = await createOrgProductDepartment({
+                    org_product_id: org_product.id,
+                    org_dep_id: it.id,
+                  });
+                  console.log('****org_product_dep Error', error, {
+                    org_product_id: org_product.id,
+                    org_dep_id: it.id,
+                  });
+                }
+              else {
+                for (const it of item.department) {
+                  const { error: onlyError } = await createOrgProductDepartment(
+                    {
+                      org_product_id: org_product.id,
+                      org_dep_id: org_departments[it].id,
+                    }
+                  );
+                  console.log('****org_product_dep Error', onlyError, {
+                    org_product_id: org_product.id,
+                    org_dep_id: org_departments[it].id,
+                  });
+                }
+              }
+            }
+          }
+        }
+        setIsLoading(false);
+        successNotification('Onboarding Steps is saved.');
+        router.push(routes.main);
+      } catch (err) {
+        console.log('*******error', err);
+        setIsLoading(false);
+      }
+    }
   }
   function gotoPrevStep() {
     setStep(step > firstStep ? step - 1 : step);

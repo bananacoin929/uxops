@@ -10,7 +10,6 @@ export default function TotalNumberOfEmployees({
 }) {
   const {
     control,
-    getValues,
     formState: { errors },
   } = useFormContext();
 

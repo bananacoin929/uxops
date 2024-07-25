@@ -2,17 +2,20 @@
 
 // import Link from 'next/link';
 // import Image from 'next/image';
+import { useAtom } from 'jotai';
 import { FiSave } from 'react-icons/fi';
 import { Button } from 'rizzui';
 import cn from '@utils/class-names';
 import { useMedia } from '@hooks/use-media';
 // import { siteConfig } from '@/config/site.config';
-// import FormSummary from '@/app/shared/multi-step/multi-step-1/form-summary';
 import {
-  // stepOneTotalSteps,
+  formDataAtom,
+  isSaveLoading,
   useStepperOne,
 } from '@/app/(dashboard)/onboarding/Steps';
 import HeaderSummary from '@/app/(dashboard)/onboarding/Steps/header-summary';
+
+import { useRouter } from 'next/navigation';
 
 interface FooterProps {
   className?: string;
@@ -21,6 +24,9 @@ interface FooterProps {
 export default function Header({ className }: FooterProps) {
   const isMobile = useMedia('(max-width: 767px)', false);
   const { step } = useStepperOne();
+  const [formData] = useAtom(formDataAtom);
+  const { push } = useRouter();
+  const [isLoading] = useAtom(isSaveLoading);
 
   let title: any = {
     0: 'Introduction',
@@ -31,10 +37,19 @@ export default function Header({ className }: FooterProps) {
     5: 'Products Info',
   };
 
+  function buttonAttr() {
+    if (step === 7) {
+      return {
+        onClick: () => push('/'),
+      };
+    }
+    return { form: `rhf-${step?.toString()}` };
+  }
+
   return (
     <header
       className={cn(
-        'flex w-full items-center justify-between md:h-20 px-4 py-5 lg:px-8 4xl:px-10 max-w-[1280px]',
+        'flex w-full max-w-[1280px] items-center justify-between px-4 py-5 md:h-20 lg:px-8 4xl:px-10',
         className
       )}
     >
@@ -52,14 +67,21 @@ export default function Header({ className }: FooterProps) {
         {/* <Button variant="text" className="text-white hover:enabled:text-white">
           Questions?
         </Button> */}
-        <Button
-          rounded="pill"
-          variant="outline"
-          className="gap-2 whitespace-nowrap border-white text-white hover:border-white hover:bg-white hover:text-black"
-        >
-          <FiSave className="h-4 w-4" />
-          Save & Close
-        </Button>
+        {step > 1 && step < 7 ? (
+          <Button
+            {...buttonAttr()}
+            type={'submit'}
+            rounded="pill"
+            isLoading={isLoading}
+            variant="outline"
+            className="gap-2 whitespace-nowrap border-white text-white hover:border-white hover:bg-white hover:text-black"
+          >
+            <FiSave className="h-4 w-4" />
+            Save & Close
+          </Button>
+        ) : (
+          <></>
+        )}
       </div>
     </header>
   );
