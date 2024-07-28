@@ -47,7 +47,12 @@ export default function Autocomplete({
   // global location state
   const location = useAtomValue(locationAtom);
   // to handle / clear input state
-  const [inputValue, setInputValue] = useState(value ? value : "");
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    setInputValue(value ? value : "");
+  }, [value]);
+
   // map loading state
   const [isLoading, setIsLoading] = useState<boolean>(true);
   // to reset location
@@ -100,9 +105,10 @@ export default function Autocomplete({
     if (autocomplete) {
       const input = event.target.value;
       setInputValue(input);
-
       const autocompleteService = new google.maps.places.AutocompleteService();
-      autocompleteService.getPlacePredictions({ input, types: ["geocode"] });
+      if (input)
+        autocompleteService.getPlacePredictions({ input, types: ["geocode"] });
+      else onPlaceSelect({ address: '', lat: 0, lng: 0 });
     }
   };
 

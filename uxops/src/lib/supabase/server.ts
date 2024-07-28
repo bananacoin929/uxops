@@ -1,5 +1,5 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { cookies } from 'next/headers';
 
 export const createClient = () => {
   const cookieStore = cookies();
@@ -23,7 +23,7 @@ export const createClient = () => {
         },
         remove(name: string, options: CookieOptions) {
           try {
-            cookieStore.set({ name, value: "", ...options });
+            cookieStore.set({ name, value: '', ...options });
           } catch (error) {
             // The `delete` method was called from a Server Component.
             // This can be ignored if you have middleware refreshing
@@ -31,15 +31,13 @@ export const createClient = () => {
           }
         },
       },
-    },
+    }
   );
 };
-
 
 export async function getSession() {
   const supabase = createClient();
   try {
-
     //getUser is server dependent and more reliabled
     const user = await getUser();
     if (!user) {
@@ -51,7 +49,7 @@ export async function getSession() {
 
     return session;
   } catch (error) {
-    console.error("Error:", error);
+    console.error('Error:', error);
     return null;
   }
 }
@@ -63,7 +61,7 @@ export async function getUser() {
     } = await supabase.auth.getUser();
     return user;
   } catch (error) {
-    console.error("Error:", error);
+    console.error('Error:', error);
     return null;
   }
 }
@@ -72,12 +70,12 @@ export async function getUserDetails() {
   const supabase = createClient();
   try {
     const { data: userDetails } = await supabase
-      .from("users")
-      .select("*")
+      .from('users')
+      .select('*')
       .single();
     return userDetails;
   } catch (error) {
-    console.error("Error:", error);
+    console.error('Error:', error);
     return null;
   }
 }
@@ -86,13 +84,13 @@ export const getUserProfile = async (id: any) => {
   const supabase = createClient();
   try {
     const { data } = await supabase
-      .from("user_aval")
-      .select("*")
-      .eq("id", id)
+      .from('users')
+      .select('*')
+      .eq('id', id)
       .single();
     return data;
   } catch (error) {
-    console.error("Error:", error);
+    console.error('Error:', error);
     return null;
   }
 };

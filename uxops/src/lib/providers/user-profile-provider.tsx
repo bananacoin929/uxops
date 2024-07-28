@@ -46,6 +46,7 @@ export const AuthProvider = ({
     init();
   }, [supabase]);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   async function init() {
     const {
       data: { session },
@@ -96,7 +97,7 @@ export const AuthProvider = ({
       refetchUserProfile,
     };
     return baseContextValue;
-  }, [session?.user?.id || null, userProfile, session]);
+  }, [userProfile, session, session?.user?.id]);
 
   return (
     <UserProfileContext.Provider value={value}>

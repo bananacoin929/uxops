@@ -85,7 +85,6 @@ export const updateSession = async (request: NextRequest) => {
     } = await supabase.auth.getUser();
 
     const isAuthenticated = !!user;
-    console.log('*********', user);
 
     if (!isAuthenticated && isInAuthRoute(pathname)) {
       const url = request.nextUrl.clone();

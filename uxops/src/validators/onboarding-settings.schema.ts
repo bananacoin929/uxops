@@ -20,6 +20,7 @@ export type RealLocationSchema = z.infer<typeof realLocationSchema>;
 
 // Step 1
 export const formStep1Schema = z.object({
+  id: z.number(),
   first_name: z.string().min(1, messages.firstNameRequired),
   last_name: z.string().min(1, messages.lastNameRequired),
   email: z
@@ -47,6 +48,7 @@ export const locationSchema = z.object({
 export type LocationSchema = z.infer<typeof locationSchema>;
 
 export const formStep2Schema = z.object({
+  id: z.number().optional(),
   name: z.string().min(1, messages.companyNameIsRequired),
   industry_id: z.number().min(1, messages.industryIsRequired),
   main_location: z.string().min(1, messages.mainLocationIsRequired),
@@ -63,6 +65,69 @@ export const formStep2Schema = z.object({
 export type FormStep2Schema = z.infer<typeof formStep2Schema>;
 
 // step 3
+
+export const defaultDepartments = [
+  {
+    name: 'Executive',
+    selected: false,
+  },
+  {
+    name: 'Human Resources',
+    selected: false,
+  },
+  {
+    name: 'Finance',
+    selected: false,
+  },
+  {
+    name: 'Accounting',
+    selected: false,
+  },
+  {
+    name: 'Operations',
+    selected: false,
+  },
+  {
+    name: 'Marketing',
+    selected: false,
+  },
+  {
+    name: 'Sales',
+    selected: false,
+  },
+  {
+    name: 'Information Technology',
+    selected: false,
+  },
+  {
+    name: 'Research & Development',
+    selected: false,
+  },
+  {
+    name: 'Legal',
+    selected: false,
+  },
+  {
+    name: 'Administrative',
+    selected: false,
+  },
+  {
+    name: 'General Counsel',
+    selected: false,
+  },
+  {
+    name: 'Public Relations',
+    selected: false,
+  },
+  {
+    name: 'Corporate Communications',
+    selected: false,
+  },
+  {
+    name: 'Business Development',
+    selected: false,
+  },
+];
 
 export const departSchema = z.object({
   name: z.string().min(1, 'Please enter the department name.'),
@@ -81,9 +146,13 @@ export type FormStep3Schema = z.infer<typeof formStep3Schema>;
 // step 4
 
 export const departDetailSchema = z.object({
+  id: z.number(),
   name: z.string(),
   locations: z.number().array().min(1, messages.departmentLocationIsRequired),
-  total_teammembers: z.number().min(1, messages.totalTeamMembersIsRequired),
+  total_members: z
+    .number()
+    .min(1, messages.totalTeamMembersIsRequired)
+    .optional(),
 });
 
 export type DepartDetailSchema = z.infer<typeof departDetailSchema>;
