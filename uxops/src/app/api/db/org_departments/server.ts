@@ -80,7 +80,6 @@ export const updateOrgDepartmentById = async (
         index++;
       }
     }
-
     console.log('**existDepartData', existDepartData);
 
     for (const item of existDepartData) {
