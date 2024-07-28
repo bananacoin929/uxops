@@ -41,13 +41,13 @@ importers:
         version: link:../config-typescript
       '@tailwindcss/container-queries':
         specifier: 0.1.1
-        version: 0.1.1(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
+        version: 0.1.1(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))
       '@tailwindcss/forms':
         specifier: ^0.5.7
-        version: 0.5.7(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
+        version: 0.5.7(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))
       tailwindcss:
         specifier: ^3.4.1
-        version: 3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+        version: 3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
 
   packages/config-typescript: {}
 
@@ -130,10 +130,10 @@ importers:
         version: 0.10.1(typescript@5.4.5)(zod@3.23.8)
       '@tailwindcss/container-queries':
         specifier: ^0.1.1
-        version: 0.1.1(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
+        version: 0.1.1(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))
       '@uploadthing/react':
         specifier: ^6.5.1
-        version: 6.7.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))))
+        version: 6.7.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))))
       ahooks:
         specifier: ^3.8.0
         version: 3.8.0(react@18.3.1)
@@ -241,7 +241,7 @@ importers:
         version: 14.2.3(react@18.3.1)
       react-email:
         specifier: 2.1.2
-        version: 2.1.2(@swc/helpers@0.5.5)(eslint@8.57.0)(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+        version: 2.1.2(@swc/helpers@0.5.5)(eslint@8.57.0)(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
       react-hook-form:
         specifier: ^7.51.4
         version: 7.52.1(react@18.3.1)
@@ -301,7 +301,7 @@ importers:
         version: 5.4.5
       uploadthing:
         specifier: ^6.10.1
-        version: 6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
+        version: 6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))
       zod:
         specifier: ^3.23.7
         version: 3.23.8
@@ -320,7 +320,7 @@ importers:
         version: link:../config-typescript
       '@tailwindcss/forms':
         specifier: ^0.5.7
-        version: 0.5.7(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
+        version: 0.5.7(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))
       '@total-typescript/ts-reset':
         specifier: ^0.5.1
         version: 0.5.1
@@ -374,10 +374,16 @@ importers:
         version: 5.0.9
       tailwindcss:
         specifier: ^3.4.3
-        version: 3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+        version: 3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
 
   uxops:
     dependencies:
+      '@azure/msal-browser':
+        specifier: ^3.20.0
+        version: 3.20.0
+      '@azure/msal-common':
+        specifier: ^14.14.0
+        version: 14.14.0
       '@dnd-kit/core':
         specifier: ^6.1.0
         version: 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -402,6 +408,9 @@ importers:
       '@isomorphic/core':
         specifier: workspace:*
         version: link:../packages/isomorphic-core
+      '@microsoft/microsoft-graph-client':
+        specifier: ^3.0.7
+        version: 3.0.7(@azure/msal-browser@3.20.0)
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.2.2
@@ -470,7 +479,7 @@ importers:
         version: 0.10.1(typescript@5.4.5)(zod@3.23.8)
       '@tailwindcss/container-queries':
         specifier: ^0.1.1
-        version: 0.1.1(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
+        version: 0.1.1(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))
       '@tanstack/match-sorter-utils':
         specifier: ^8.15.1
         version: 8.15.1
@@ -479,7 +488,7 @@ importers:
         version: 8.19.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@uploadthing/react':
         specifier: ^6.5.1
-        version: 6.7.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))))
+        version: 6.7.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))))
       ahooks:
         specifier: ^3.8.0
         version: 3.8.0(react@18.3.1)
@@ -581,7 +590,7 @@ importers:
         version: 14.2.3(react@18.3.1)
       react-email:
         specifier: 2.1.2
-        version: 2.1.2(@swc/helpers@0.5.5)(eslint@8.57.0)(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+        version: 2.1.2(@swc/helpers@0.5.5)(eslint@8.57.0)(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
       react-hook-form:
         specifier: ^7.51.4
         version: 7.52.1(react@18.3.1)
@@ -638,7 +647,7 @@ importers:
         version: 5.4.5
       uploadthing:
         specifier: ^6.10.1
-        version: 6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
+        version: 6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))
       zod:
         specifier: ^3.23.7
         version: 3.23.8
@@ -657,7 +666,7 @@ importers:
         version: link:../packages/config-typescript
       '@tailwindcss/forms':
         specifier: ^0.5.7
-        version: 0.5.7(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
+        version: 0.5.7(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))
       '@total-typescript/ts-reset':
         specifier: ^0.5.1
         version: 0.5.1
@@ -714,13 +723,21 @@ importers:
         version: 5.0.9
       tailwindcss:
         specifier: ^3.4.3
-        version: 3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+        version: 3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
 
 packages:
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
+
+  '@azure/msal-browser@3.20.0':
+    resolution: {integrity: sha512-ErsxbfCGIwdqD8jipqdxpfAGiUEQS7MWUe39Rjhl0ZVPsb1JEe9bZCe2+0g23HDH6DGyCAtnTNN9scPtievrMQ==}
+    engines: {node: '>=0.8.0'}
+
+  '@azure/msal-common@14.14.0':
+    resolution: {integrity: sha512-OxcOk9H1/1fktHh6//VCORgSNJc2dCQObTm6JNmL824Z6iZSO6eFo/Bttxe0hETn9B+cr7gDouTQtsRq3YPuSQ==}
+    engines: {node: '>=0.8.0'}
 
   '@babel/code-frame@7.24.7':
     resolution: {integrity: sha512-BcYH1CVJBO9tvyIZ2jVeXgSIMvGZ2FDRvDdOIVQyuklNKSsx+eppDEBq/g47Ayw+RqNFE+URvOShmf+f/qwAlA==}
@@ -1243,6 +1260,24 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
+
+  '@microsoft/microsoft-graph-client@3.0.7':
+    resolution: {integrity: sha512-/AazAV/F+HK4LIywF9C+NYHcJo038zEnWkteilcxC1FM/uK/4NVGDKGrxx7nNq1ybspAroRKT4I1FHfxQzxkUw==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@azure/identity': '*'
+      '@azure/msal-browser': '*'
+      buffer: '*'
+      stream-browserify: '*'
+    peerDependenciesMeta:
+      '@azure/identity':
+        optional: true
+      '@azure/msal-browser':
+        optional: true
+      buffer:
+        optional: true
+      stream-browserify:
+        optional: true
 
   '@next/env@14.1.0':
     resolution: {integrity: sha512-Py8zIo+02ht82brwwhTg36iogzFqGLPXlRGKQw5s+qP/kMNc4MAyDeEwBKDijk6zTIbegEgu8Qy7C1LboslQAw==}
@@ -5620,6 +5655,12 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
+  '@azure/msal-browser@3.20.0':
+    dependencies:
+      '@azure/msal-common': 14.14.0
+
+  '@azure/msal-common@14.14.0': {}
+
   '@babel/code-frame@7.24.7':
     dependencies:
       '@babel/highlight': 7.24.7
@@ -6118,6 +6159,13 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@microsoft/microsoft-graph-client@3.0.7(@azure/msal-browser@3.20.0)':
+    dependencies:
+      '@babel/runtime': 7.24.8
+      tslib: 2.6.3
+    optionalDependencies:
+      '@azure/msal-browser': 3.20.0
 
   '@next/env@14.1.0': {}
 
@@ -6849,14 +6897,14 @@ snapshots:
     optionalDependencies:
       typescript: 5.4.5
 
-  '@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))':
+  '@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))':
     dependencies:
-      tailwindcss: 3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+      tailwindcss: 3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
 
-  '@tailwindcss/forms@0.5.7(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))':
+  '@tailwindcss/forms@0.5.7(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))':
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+      tailwindcss: 3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
 
   '@tanstack/match-sorter-utils@8.15.1':
     dependencies:
@@ -7125,14 +7173,14 @@ snapshots:
 
   '@uploadthing/mime-types@0.2.10': {}
 
-  '@uploadthing/react@6.7.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))))':
+  '@uploadthing/react@6.7.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))))':
     dependencies:
       '@uploadthing/dropzone': 0.4.1(react@18.3.1)
       '@uploadthing/shared': 6.7.8
       file-selector: 0.6.0
       react: 18.3.1
       tailwind-merge: 2.4.0
-      uploadthing: 6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)))
+      uploadthing: 6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)))
     optionalDependencies:
       next: 14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     transitivePeerDependencies:
@@ -9506,7 +9554,7 @@ snapshots:
       camelcase-css: 2.0.1
       postcss: 8.4.39
 
-  postcss-load-config@4.0.2(postcss@8.4.39)(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)):
+  postcss-load-config@4.0.2(postcss@8.4.39)(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)):
     dependencies:
       lilconfig: 3.1.2
       yaml: 2.4.5
@@ -9766,7 +9814,7 @@ snapshots:
       prop-types: 15.8.1
       react: 18.3.1
 
-  react-email@2.1.2(@swc/helpers@0.5.5)(eslint@8.57.0)(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)):
+  react-email@2.1.2(@swc/helpers@0.5.5)(eslint@8.57.0)(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)):
     dependencies:
       '@babel/parser': 7.24.1
       '@radix-ui/colors': 1.0.1
@@ -9809,7 +9857,7 @@ snapshots:
       source-map-js: 1.0.2
       stacktrace-parser: 0.1.10
       tailwind-merge: 2.2.0
-      tailwindcss: 3.4.0(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+      tailwindcss: 3.4.0(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
       typescript: 5.1.6
     transitivePeerDependencies:
       - '@babel/core'
@@ -10515,7 +10563,7 @@ snapshots:
 
   tailwind-merge@2.4.0: {}
 
-  tailwindcss@3.4.0(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)):
+  tailwindcss@3.4.0(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -10534,7 +10582,7 @@ snapshots:
       postcss: 8.4.39
       postcss-import: 15.1.0(postcss@8.4.39)
       postcss-js: 4.0.1(postcss@8.4.39)
-      postcss-load-config: 4.0.2(postcss@8.4.39)(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+      postcss-load-config: 4.0.2(postcss@8.4.39)(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
       postcss-nested: 6.0.1(postcss@8.4.39)
       postcss-selector-parser: 6.1.1
       resolve: 1.22.8
@@ -10542,7 +10590,7 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5)):
+  tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5)):
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -10561,7 +10609,7 @@ snapshots:
       postcss: 8.4.39
       postcss-import: 15.1.0(postcss@8.4.39)
       postcss-js: 4.0.1(postcss@8.4.39)
-      postcss-load-config: 4.0.2(postcss@8.4.39)(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+      postcss-load-config: 4.0.2(postcss@8.4.39)(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
       postcss-nested: 6.0.1(postcss@8.4.39)
       postcss-selector-parser: 6.1.1
       resolve: 1.22.8
@@ -10779,7 +10827,7 @@ snapshots:
       registry-auth-token: 3.3.2
       registry-url: 3.1.0
 
-  uploadthing@6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))):
+  uploadthing@6.13.2(next@14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))):
     dependencies:
       '@effect/schema': 0.68.12(effect@3.4.5)
       '@uploadthing/mime-types': 0.2.10
@@ -10789,7 +10837,7 @@ snapshots:
       std-env: 3.7.0
     optionalDependencies:
       next: 14.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      tailwindcss: 3.4.6(ts-node@10.9.2(@types/node@20.12.10)(typescript@5.4.5))
+      tailwindcss: 3.4.6(ts-node@10.9.2(@swc/core@1.3.101(@swc/helpers@0.5.5))(@types/node@20.12.10)(typescript@5.4.5))
 
   upper-case-first@1.1.2:
     dependencies:

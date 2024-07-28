@@ -144,6 +144,12 @@ export const routes = {
     otp4: '/auth/otp-4',
     otp5: '/auth/otp-5',
   },
+  //////////////////////////
   signIn: '/signin',
   main: '/',
+  settings: {
+    onboarding: {
+      onboardingSettings: '/settings/onboarding',
+    },
+  },
 };
