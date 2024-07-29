@@ -11,7 +11,7 @@ import ThemeSwitcher from '@/layouts/settings/theme-switcher';
 export default function SettingsDrawer() {
   return (
     <>
-      <SimpleBar className="h-[calc(100%-138px)]">
+      <SimpleBar className="h-[calc(100%-25px)]">
         <div className="px-5 py-6">
           <ThemeSwitcher />
           <AppDirection />
@@ -20,7 +20,7 @@ export default function SettingsDrawer() {
         </div>
       </SimpleBar>
 
-      <SettingsFooterButton />
+      {/* <SettingsFooterButton /> */}
     </>
   );
 }

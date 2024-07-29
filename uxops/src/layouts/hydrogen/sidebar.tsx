@@ -20,7 +20,7 @@ export default function Sidebar({ className }: { className?: string }) {
           aria-label="Site Logo"
           className="text-gray-800 hover:text-gray-900"
         >
-          Customer Admin Console - Left Navigation Pane
+          UX Ops Platform
         </Link>
       </div>
 
