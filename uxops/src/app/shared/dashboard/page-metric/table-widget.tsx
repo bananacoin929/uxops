@@ -44,7 +44,6 @@ export default function PageMetrics({
   } = useTable(data, pageSize);
 
   useEffect(() => {
-    console.log('rest');
     handleReset();
   }, [data]);
 
