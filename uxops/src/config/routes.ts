@@ -152,4 +152,5 @@ export const routes = {
       onboardingSettings: '/settings/onboarding',
     },
   },
+  dashboard: '/dashboard',
 };

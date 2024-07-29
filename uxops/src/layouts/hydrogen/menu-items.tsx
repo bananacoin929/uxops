@@ -75,35 +75,40 @@ export const menuItems = [
   // label end
   {
     name: 'Home',
-    href: routes.analytics,
-    icon: <IoMdHome />,
+    href: routes.dashboard,
+    // icon: <IoMdHome />,
   },
   {
     name: 'Products',
     href: routes.eCommerce.products,
-    icon: <HiMiniSquare2Stack />,
+    // icon: <HiMiniSquare2Stack />,
+  },
+  {
+    name: 'Services',
+    href: routes.eCommerce.cart,
+    // icon: <HiMiniSquare2Stack />,
   },
   {
     name: 'Advisories',
     href: routes.support.snippets,
-    icon: <FaTicketSimple />,
+    // icon: <FaTicketSimple />,
   },
 
   {
     name: 'Reports',
     href: routes.support.templates,
-    icon: <RiMegaphoneFill />,
+    // icon: <RiMegaphoneFill />,
   },
   {
     name: 'MANAGEMENT',
   },
   {
     name: 'Product Center',
-    href: routes.analytics,
+    href: routes.appointment,
   },
   {
     name: 'Services Center',
-    href: routes.analytics,
+    href: routes.eCommerce,
   },
   {
     name: 'Settings',
@@ -115,7 +120,7 @@ export const menuItems = [
   },
   {
     name: 'Support Concierge',
-    href: routes.analytics,
+    href: routes.executive,
     // icon: <FaCog />,
   },
   {
@@ -126,23 +131,23 @@ export const menuItems = [
   {
     name: 'ACCOUNT',
   },
+  // {
+  //   name: 'Profile',
+  //   href: routes.profile,
+  //   // icon: <PiUserCircleDuotone />,
+  // },
+  // {
+  //   name: 'Themes',
+  //   href: routes.forms.newsletter,
+  //   // icon: <PiEnvelopeSimpleOpenDuotone />,
+  // },
+  // {
+  //   name: 'Notification Settings',
+  //   href: routes.forms.notificationPreference,
+  //   // icon: <PiBellSimpleRingingDuotone />,
+  // },
   {
-    name: 'Profile',
-    href: routes.profile,
-    // icon: <PiUserCircleDuotone />,
-  },
-  {
-    name: 'Themes',
-    href: routes.forms.newsletter,
-    // icon: <PiEnvelopeSimpleOpenDuotone />,
-  },
-  {
-    name: 'Notification Settings',
-    href: routes.forms.notificationPreference,
-    // icon: <PiBellSimpleRingingDuotone />,
-  },
-  {
-    name: 'Onboarding Settings',
+    name: 'Onboarding',
     href: routes.settings.onboarding.onboardingSettings,
     // icon: <PiBellSimpleRingingDuotone />,
   },
