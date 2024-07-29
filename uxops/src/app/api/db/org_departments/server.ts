@@ -57,20 +57,17 @@ export const updateOrgDepartmentById = async (
     let index = 0;
     let error: any;
     for (const department of data.departments) {
-      const { data: isExistDepart } = await supabaseAdmin
-        .from('org_departments')
-        .select('*')
-        .eq('org_id', data.org_id)
-        .eq('name', department)
-        .eq('is_deleted', false)
-        .single();
+      const isExistDepart = existDepartData.find(
+        (it: any) =>
+          it.org_id === data.org_id &&
+          it.name === department &&
+          it.is_deleted === false
+      );
       console.log('isExistDepart', isExistDepart);
       if (isExistDepart) {
-        if (existDepartData.find((it) => it.id === isExistDepart.id)) {
-          existDepartData = existDepartData.filter(
-            (it: any) => it.id !== isExistDepart.id
-          );
-        }
+        existDepartData = existDepartData.filter(
+          (it: any) => it.id !== isExistDepart.id
+        );
         index++;
       } else {
         const { error: insertError } = await supabaseAdmin
@@ -83,6 +80,7 @@ export const updateOrgDepartmentById = async (
         index++;
       }
     }
+
     console.log('**existDepartData', existDepartData);
 
     for (const item of existDepartData) {
@@ -97,4 +95,5 @@ export const updateOrgDepartmentById = async (
   } else {
     return result;
   }
+  
 };

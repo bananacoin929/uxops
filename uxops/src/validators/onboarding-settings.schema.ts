@@ -2,11 +2,13 @@ import { z } from 'zod';
 import { messages } from '@/config/messages';
 
 export const realLocationSchema = z.object({
+  id: z.number().optional(),
   type: z.string(),
   address: z
     .string()
     .min(1, { message: messages.mainLocationIsRequired })
-    .optional(),
+    .optional()
+    .nullable(),
   name: z
     .string()
     .min(1, { message: messages.locationNameIsRequired })
