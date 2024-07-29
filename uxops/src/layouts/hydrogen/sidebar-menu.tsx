@@ -135,7 +135,7 @@ export function SidebarMenu() {
                 as="h6"
                 className={cn(
                   'mb-2 truncate px-6 text-xs font-normal uppercase tracking-widest text-gray-500 2xl:px-8',
-                  index !== 0 && 'mt-6 border-t border-gray-100 pt-6 3xl:mt-7'
+                  index !== 0 && 'pt-6 3xl:mt-7'
                 )}
               >
                 {item.name}

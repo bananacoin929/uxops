@@ -34,22 +34,60 @@ export const updateOrgLocationById = async (
 ): Promise<PostgrestSingleResponse<any>> => {
   const result = await supabaseAdmin
     .from('org_locations')
-    .update({ is_deleted: true })
-    .eq('org_id', data.org_id);
+    .select('*')
+    .eq('org_id', data.org_id)
+    .eq('is_deleted', false);
+
+  let existLocationData: any[] = result.data ?? [];
+  console.log('existLocationData', existLocationData, data);
 
   if (!result.error) {
     let index = 0;
     let error: any;
     for (const location of data.locations) {
-      const { error: insertError } = await supabaseAdmin
-        .from('org_locations')
-        .insert({ ...location, org_id: data.org_id });
-      if (error) {
-        error = insertError;
-        break;
+      const isExistLocation = existLocationData.find(
+        (it: any) =>
+          it.org_id === data.org_id &&
+          it.address === location.address &&
+          it.type === location.type &&
+          it.name === location.name &&
+          it.country === location.country &&
+          it.state === location.state &&
+          it.city === location.city &&
+          it.is_deleted === false
+      );
+
+      console.log('isExistLocation', isExistLocation);
+
+      if (isExistLocation) {
+        existLocationData = existLocationData.filter(
+          (it: any) => it.id !== isExistLocation.id
+        );
+        index++;
+      } else {
+        const { error: insertError } = await supabaseAdmin
+          .from('org_locations')
+          .insert({ ...location, org_id: data.org_id });
+        if (error) {
+          error = insertError;
+          break;
+        }
+        index++;
       }
-      index++;
     }
+    console.log('**existLocationData', existLocationData);
+
+    for (const item of existLocationData) {
+      await supabaseAdmin
+        .from('org_locations')
+        .update({ is_deleted: true })
+        .eq('id', item.id);
+      await supabaseAdmin
+        .from('dep_detail_locations')
+        .update({ is_deleted: true })
+        .eq('location_id', item.id);
+    }
+
     if (index === data.locations.length) {
       return { ...result, error };
     } else return result;

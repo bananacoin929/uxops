@@ -56,6 +56,9 @@ import { FaCog } from 'react-icons/fa';
 // Note: do not add href in the label object, it is rendering as label
 export const menuItems = [
   {
+    name: 'UxOps',
+  },
+  {
     name: 'Search',
     href: routes.searchAndFilter.realEstate,
     icon: <CiSearch />,
@@ -67,7 +70,7 @@ export const menuItems = [
   },
   // label start
   {
-    name: 'Overview',
+    name: 'DASHBOARD',
   },
   // label end
   {
@@ -92,15 +95,58 @@ export const menuItems = [
     icon: <RiMegaphoneFill />,
   },
   {
-    name: 'Settings',
-    // href: routes.analytics,
-    icon: <FaCog />,
+    name: 'MANAGEMENT',
   },
   {
-    name: 'Onboarding',
-    href: routes.settings.onboarding.onboardingSettings,
-    icon: <PiUserDuotone />,
+    name: 'Product Center',
+    href: routes.analytics,
   },
+  {
+    name: 'Services Center',
+    href: routes.analytics,
+  },
+  {
+    name: 'Settings',
+    href: routes.settings.onboarding.onboardingSettings,
+    // icon: <PiUserDuotone />,
+  },
+  {
+    name: 'SUPPORT CENTER',
+  },
+  {
+    name: 'Support Concierge',
+    href: routes.analytics,
+    // icon: <FaCog />,
+  },
+  {
+    name: 'Release Notes',
+    href: routes.blank,
+    // icon: <PiNoteBlankDuotone />,
+  },
+  {
+    name: 'ACCOUNT',
+  },
+  {
+    name: 'Profile',
+    href: routes.profile,
+    // icon: <PiUserCircleDuotone />,
+  },
+  {
+    name: 'Themes',
+    href: routes.forms.newsletter,
+    // icon: <PiEnvelopeSimpleOpenDuotone />,
+  },
+  {
+    name: 'Notification Settings',
+    href: routes.forms.notificationPreference,
+    // icon: <PiBellSimpleRingingDuotone />,
+  },
+  {
+    name: 'Onboarding Settings',
+    href: routes.settings.onboarding.onboardingSettings,
+    // icon: <PiBellSimpleRingingDuotone />,
+  },
+
   // {
   //   name: 'Personal Information',
   //   href: routes.forms.personalInformation,
