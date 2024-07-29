@@ -44,7 +44,7 @@ type FormDataType = {
   name: string;
   industry_id: number | undefined;
   main_location: string;
-  secondary_location: string;
+  secondary_location: string | undefined;
   add_locations: LocationSchema[];
   total_employees: number;
   data_locations: LocationSchema[];
@@ -64,7 +64,7 @@ export const initialFormData = {
   name: '',
   industry_id: undefined,
   main_location: '',
-  secondary_location: '',
+  secondary_location: undefined,
   add_locations: [],
   total_employees: 0,
   data_locations: [],

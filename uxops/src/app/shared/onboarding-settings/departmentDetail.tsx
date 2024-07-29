@@ -42,12 +42,10 @@ export default function StepThree() {
         } else opts.push({ label: location.name, value: location.id });
       });
     }
-    console.log(opts);
     setOptions(opts);
     const { data: depDetailData, error: getDetailError } = await getDepDetail({
       org_id: userProfile?.org_id,
     });
-    console.log(getDetailError, depDetailData);
     if (!getDetailError) {
       let data: DepartDetailSchema[] = [];
       depDetailData.map((item: any) => {
@@ -57,7 +55,7 @@ export default function StepThree() {
               id: item.id,
               name: item.name,
               total_members: it.total_members,
-              locations: it.locations.map((lo: any) => lo.location_id),
+              locations: it.locations.map((lo: any) => lo),
             });
           });
         } else {
@@ -69,7 +67,6 @@ export default function StepThree() {
           });
         }
       });
-      console.log(data);
       setDepartmentDetails(data);
     }
   }
@@ -222,6 +219,7 @@ export default function StepThree() {
                                       (op: any) => op.value === text
                                     )?.label ?? ''}
                                     <button
+                                      type="button"
                                       onClick={() => {
                                         let updateData = value?.map(
                                           (it: any, ind: number) => {

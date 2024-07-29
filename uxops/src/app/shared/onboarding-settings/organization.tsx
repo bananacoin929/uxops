@@ -96,6 +96,8 @@ export default function StepTwo() {
       name: data.name,
       industry_id: data.industry_id,
       total_employees: data.total_employees,
+      main_location: data.main_location,
+      secondary_location: data.secondary_location,
       add_locations: data.add_locations ?? [],
       data_locations: data.data_locations ?? [],
       public_cloud_provider: data.public_cloud_provider,
@@ -112,7 +114,7 @@ export default function StepTwo() {
         data.add_locations?.map((it: LocationSchema) => {
           return {
             type: 'ADD',
-            address: undefined,
+            address: null,
             name: it.name,
             country: it.country,
             state: it.state,
@@ -123,7 +125,7 @@ export default function StepTwo() {
         data.data_locations?.map((it: LocationSchema) => {
           return {
             type: 'DATA_CENTER',
-            address: undefined,
+            address: null,
             name: it.name,
             country: it.country,
             state: it.state,
