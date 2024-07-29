@@ -155,7 +155,7 @@ export const getColumns = ({ sortConfig, onHeaderCellClick }: Columns) => [
             return (
               <div
                 key={index}
-                className="rounded-xl border-[1px] border-gray-500 p-2 w-max"
+                className="w-max rounded-xl border-[1px] border-gray-500 p-2"
               >
                 {tag}
               </div>
