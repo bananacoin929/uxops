@@ -104,7 +104,7 @@ export const menuItems = [
   },
   {
     name: 'Product Center',
-    href: routes.appointment,
+    href: routes.product,
   },
   {
     name: 'Services Center',
@@ -112,7 +112,7 @@ export const menuItems = [
   },
   {
     name: 'Settings',
-    href: routes.settings.onboarding.onboardingSettings,
+    href: routes.settings.default,
     // icon: <PiUserDuotone />,
   },
   {
@@ -131,26 +131,26 @@ export const menuItems = [
   {
     name: 'ACCOUNT',
   },
-  // {
-  //   name: 'Profile',
-  //   href: routes.profile,
-  //   // icon: <PiUserCircleDuotone />,
-  // },
-  // {
-  //   name: 'Themes',
-  //   href: routes.forms.newsletter,
-  //   // icon: <PiEnvelopeSimpleOpenDuotone />,
-  // },
-  // {
-  //   name: 'Notification Settings',
-  //   href: routes.forms.notificationPreference,
-  //   // icon: <PiBellSimpleRingingDuotone />,
-  // },
   {
-    name: 'Onboarding',
-    href: routes.settings.onboarding.onboardingSettings,
+    name: 'Profile',
+    href: routes.profile,
+    // icon: <PiUserCircleDuotone />,
+  },
+  {
+    name: 'Themes',
+    href: routes.forms.newsletter,
+    // icon: <PiEnvelopeSimpleOpenDuotone />,
+  },
+  {
+    name: 'Notification Settings',
+    href: routes.forms.notificationPreference,
     // icon: <PiBellSimpleRingingDuotone />,
   },
+  // {
+  //   name: 'Onboarding',
+  //   href: routes.settings.onboarding.onboardingSettings,
+  //   // icon: <PiBellSimpleRingingDuotone />,
+  // },
 
   // {
   //   name: 'Personal Information',

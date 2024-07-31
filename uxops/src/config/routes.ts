@@ -148,9 +148,8 @@ export const routes = {
   signIn: '/signin',
   main: '/',
   settings: {
-    onboarding: {
-      onboardingSettings: '/settings/onboarding',
-    },
+    default: '/settings',
   },
-  dashboard: '/dashboard',
+  dashboard: '/',
+  product: '/product',
 };
