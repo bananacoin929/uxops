@@ -1,53 +1,100 @@
 'use client';
+import { Accordion, Badge, Input, Password, Switch, Button } from 'rizzui';
+import { FaChevronDown } from 'react-icons/fa';
+import cn from '@utils/class-names';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import Azure from './integrations/azure';
+import { useUserProfile } from '@/lib/providers/user-profile-provider';
+import { getIntegration } from '@/utils/integrations';
 
-const Steps = [
+const data = [
   {
-    name: 'Admin Info',
-    description:
-      'We’ll ask you a few more questions about your organization admin info.',
-  },
-  {
-    name: 'Organization Info',
-    description: 'We’ll ask you a few more question about organization.',
-  },
-  {
-    name: 'Department Info',
-    description:
-      'We’ll ask you a few more question about your organization departments.',
-  },
-  {
-    name: 'Products',
-    description: 'We’ll ask you a few more question about products.',
+    id: 'azure',
+    title: 'Azure',
+    icon: '/Microsoft.ico',
+    component: Azure,
   },
 ];
 
 export default function StepZero() {
+  const { userProfile } = useUserProfile();
+  const [integrationData, setIntegrationData] = useState<any>({});
+
+  async function getData() {
+    const { data, error } = await getIntegration({
+      user_id: userProfile?.id,
+    });
+    console.log('error', error);
+    !error && setIntegrationData(data);
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   return (
-    <>
-      <div className=" w-0 @5xl:col-span-3" />
-      <div className="col-span-full flex items-center justify-center @5xl:col-span-6">
-        <form className="flex-grow rounded-lg bg-white p-5 @4xl:p-7 dark:bg-gray-0">
-          <p className="mb-6 text-2xl font-bold">
-            This is our onboarding and we’ll ask you some questions.
-          </p>
-          <div className="col-span-full grid gap-4 @4xl:gap-6">
-            {Steps.map((step, index) => (
-              <div
-                key={index}
-                className=" rounded-xl border-[1px] border-muted px-4 py-5"
-              >
-                <article>
-                  <h4 className="text-base font-semibold @5xl:text-xl">
-                    {step.name}
-                  </h4>
-                  <p>{step.description}</p>
-                </article>
-              </div>
-            ))}
+    <div className="mt-6 grid w-full grid-cols-12">
+      <div className=" col-span-2 @xl:col-span-2" />
+      <div className="col-span-8 flex items-center justify-center @xl:col-span-8">
+        {data.map((item: any) => (
+          <div
+            key={item?.title}
+            className="bg-surface-100  hover:bg-overlay-hover data-open:bg-selection border-default hover:border-strong data-open:border-strong data-open:pb-px col-span-12 mx-auto w-full -space-y-px overflow-hidden border shadow transition first:rounded-tl first:rounded-tr last:rounded-bl last:rounded-br hover:z-50"
+          >
+            <Accordion className="group  w-full flex-col items-center justify-between rounded px-6 text-foreground">
+              <Accordion.Header>
+                {
+                  // @ts-ignore: TS2322
+                  ({ open }: { open: boolean }) => {
+                    return (
+                      <div className="flex w-full cursor-pointer items-center justify-between py-5 text-xl font-semibold">
+                        <div className="flex items-center justify-center gap-3">
+                          <Image
+                            src={item?.icon}
+                            alt={item?.icon}
+                            width={20}
+                            height={20}
+                            className="h-5 w-5 rounded-full"
+                          />
+                          {item?.title}
+                        </div>
+                        <div className="flex items-center justify-center gap-3">
+                          {integrationData[`${item.id}`]?.enabled ? (
+                            <Badge variant="flat" color="success">
+                              Enabled
+                            </Badge>
+                          ) : (
+                            <Badge variant="flat" color={undefined}>
+                              Disabled
+                            </Badge>
+                          )}
+                          <FaChevronDown
+                            className={cn(
+                              'h-5 w-5 -rotate-90 transform transition-transform duration-300',
+                              open && '-rotate-0'
+                            )}
+                          />
+                        </div>
+                      </div>
+                    );
+                  }
+                }
+              </Accordion.Header>
+              <Accordion.Body className="mb-7">
+                {
+                  <item.component
+                    data={integrationData}
+                    setData={setIntegrationData}
+                    getData={getData}
+                  />
+                }
+              </Accordion.Body>
+            </Accordion>
           </div>
-        </form>
+        ))}
       </div>
-      <div className=" w-0 @5xl:col-span-3" />
-    </>
+      <div className=" col-span-2 @xl:col-span-2" />
+    </div>
   );
 }
