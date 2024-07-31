@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAtom } from 'jotai';
-import { Switch, Checkbox, Select, Button, Input } from 'rizzui';
+import { Switch, Select, Input } from 'rizzui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { SubmitHandler, useForm, Controller } from 'react-hook-form';
 import {
@@ -15,11 +15,6 @@ import {
 } from '@/validators/onboarding-form.schema';
 import Image from 'next/image';
 import { PiCheckBold, PiXBold } from 'react-icons/pi';
-import {
-  LOGIN_REQUEST,
-  PUBLIC_CLIENT_APPLICATION,
-  TOKEN_REQUEST,
-} from '@/lib/msal/msalConfig';
 import { Form } from '@ui/form-provider';
 import FormGroup from '@/app/shared/form-group';
 import FormFooter from '@components/form-footer';
@@ -80,7 +75,7 @@ export default function StepFour() {
         return (
           <>
             <FormGroup
-              title="Product Infomation"
+              title="Product Selection"
               description="Now let’s get to the fun part, let’s add your products"
               className="pt-7 @2xl:pt-9 @3xl:grid-cols-12 @3xl:pt-11"
             />
@@ -121,72 +116,24 @@ export default function StepFour() {
                               {product.vendor.name}
                             </span>
                           </div>
-                          {token ? (
-                            <Switch
-                              className="ml-auto"
-                              defaultChecked={product.isActive}
-                              onChange={async (e) => {
-                                let updateData = value?.map(
-                                  (it: any, ind: number) => {
-                                    if (ind === index) {
-                                      return {
-                                        ...it,
-                                        isActive: e.target.checked,
-                                      };
-                                    } else return it;
-                                  }
-                                );
-                                // if (e.target.checked === true) {
-                                // } else {
-                                //   if (!interactionInProgress) {
-                                //     setInteractionInProgress(true);
-                                //     PUBLIC_CLIENT_APPLICATION.logout();
-                                //     setToken(null);
-                                //     setInteractionInProgress(false);
-                                //   }
-                                //   const itemKey = 'msal.interaction.status';
-                                //   if (sessionStorage.getItem(itemKey)) {
-                                //     sessionStorage.removeItem(itemKey);
-                                //   }
-                                // }
-                                setValue('products', updateData);
-                              }}
-                            />
-                          ) : (
-                            <Button
-                              onClick={async () => {
-                                if (!interactionInProgress) {
-                                  setInteractionInProgress(true);
-                                  try {
-                                    const loginResponse =
-                                      await PUBLIC_CLIENT_APPLICATION.loginPopup(
-                                        LOGIN_REQUEST
-                                      );
-                                    if (loginResponse.account) {
-                                      PUBLIC_CLIENT_APPLICATION.setActiveAccount(
-                                        loginResponse.account
-                                      );
-                                    }
-                                    const tokenResponse: any =
-                                      await PUBLIC_CLIENT_APPLICATION.acquireTokenSilent(
-                                        TOKEN_REQUEST
-                                      );
-                                    console.log(tokenResponse);
-                                    setToken(tokenResponse.accessToken);
-                                  } catch (error) {
-                                    console.error(
-                                      'Authentication failed:',
-                                      error
-                                    );
-                                  } finally {
-                                    setInteractionInProgress(false);
-                                  }
+                          <Switch
+                            className="ml-auto"
+                            defaultChecked={product.isActive}
+                            onChange={async (e) => {
+                              let updateData = value?.map(
+                                (it: any, ind: number) => {
+                                  if (ind === index) {
+                                    return {
+                                      ...it,
+                                      isActive: e.target.checked,
+                                    };
+                                  } else return it;
                                 }
-                              }}
-                            >
-                              Integrate
-                            </Button>
-                          )}
+                              );
+
+                              setValue('products', updateData);
+                            }}
+                          />
                         </div>
                         <div className="p-4">
                           <h3 className="mb-2 text-lg font-semibold">
