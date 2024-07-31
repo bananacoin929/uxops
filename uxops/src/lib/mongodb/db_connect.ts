@@ -11,11 +11,11 @@ declare global {
   };
 }
 
-const { MONGODB_URI } = process.env;
+const { NEXT_MONGODB_URI } = process.env;
 
-if (!MONGODB_URI) {
+if (!NEXT_MONGODB_URI) {
   throw new Error(
-    'Please define the MONGODB_URI environment variable inside .env.local'
+    'Please define the NEXT_MONGODB_URI environment variable inside .env.local'
   );
 }
 
@@ -41,7 +41,7 @@ async function dbConnect() {
       bufferCommands: false,
     };
 
-    cached.promise = connect(MONGODB_URI!, opts).then((mongoose) => {
+    cached.promise = connect(NEXT_MONGODB_URI!, opts).then((mongoose) => {
       return mongoose;
     });
   }
