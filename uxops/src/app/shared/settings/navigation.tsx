@@ -12,28 +12,24 @@ import { useBerylliumSidebars } from '@/layouts/beryllium/beryllium-utils';
 
 const menuItems = [
   {
-    label: 'Introduction',
-    value: '/settings/onboarding',
-  },
-  {
-    label: 'Organizational Admin',
-    value: '/settings/onboarding/organization-admin',
+    label: 'Organization Admin',
+    value: '/settings',
   },
   {
     label: 'Organization',
-    value: '/settings/onboarding/organization',
+    value: '/settings/organization',
   },
   {
     label: 'Department',
-    value: '/settings/onboarding/department',
+    value: '/settings/department',
   },
   {
     label: 'Departments Detail',
-    value: '/settings/onboarding/department-detail',
+    value: '/settings/department-detail',
   },
   {
-    label: 'Product',
-    value: '/settings/onboarding/product',
+    label: 'Integration',
+    value: '/settings/integration',
   },
 ];
 
