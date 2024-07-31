@@ -1,5 +1,5 @@
 import { metaObject } from '@/config/site.config';
-import Organization from '@/app/shared/onboarding-settings/organization';
+import Organization from '@/app/shared/settings/organization';
 
 // export const metadata = {
 //   ...metaObject('Notification'),
