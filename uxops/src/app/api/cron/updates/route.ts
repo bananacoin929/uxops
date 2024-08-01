@@ -1,3 +1,5 @@
+"use server"
+
 import connectMongo from '@/lib/mongodb/db_connect';
 import { createClient } from '@supabase/supabase-js';
 import ProductUpdate from '@/lib/mongodb/models/product-update';
