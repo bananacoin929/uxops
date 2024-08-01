@@ -12,3 +12,15 @@ export const insertOrgProduct = async (
 
   return result;
 };
+
+export const updateOrgProductById = async (
+  data: any
+): Promise<PostgrestSingleResponse<any>> => {
+  const result = await supabaseAdmin
+    .from('org_products')
+    .update(data)
+    .eq('id', data?.id)
+    .select()
+    .single();
+  return result;
+};
