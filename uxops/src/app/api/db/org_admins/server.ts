@@ -1,9 +1,5 @@
-import { PostgrestSingleResponse, createClient } from '@supabase/supabase-js';
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-);
+import { PostgrestSingleResponse } from '@supabase/supabase-js';
+import { supabaseAdmin } from '@/lib/supabase/admin';
 
 export const insertOrgAdmin = async (
   data: any
