@@ -10,7 +10,7 @@ interface IBody {
   content: string;
 }
 
-export interface IProductUpdate {
+export interface IRelease {
   startDateTime: Date;
   endDateTime: Date;
   lastModifiedDateTime: Date;
@@ -26,7 +26,7 @@ export interface IProductUpdate {
   details: IDetail[];
   body: IBody;
 }
-const ProductSchema = new Schema<IProductUpdate>(
+const ReleaseSchema = new Schema<IRelease>(
   {
     startDateTime: Date,
     endDateTime: Date,
@@ -55,5 +55,6 @@ const ProductSchema = new Schema<IProductUpdate>(
     timestamps: true,
   }
 );
-const Product = models.Product_Update || model('Product_Update', ProductSchema);
-export default Product;
+const Release = models.Release || model('Release', ReleaseSchema);
+
+export default Release;
