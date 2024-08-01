@@ -18,14 +18,6 @@ export const env = createEnv({
       // VERCEL_URL doesn't include `https` so it cant be validated as a URL
       process.env.VERCEL ? z.string().min(1) : z.string().url()
     ),
-    NEXT_PUBLIC_SUPABASE_URL:
-      process.env.NODE_ENV === 'production'
-        ? z.string().min(1)
-        : z.string().min(1).optional(),
-    SUPABASE_SERVICE_ROLE_KEY:
-      process.env.NODE_ENV === 'production'
-        ? z.string().min(1)
-        : z.string().min(1).optional(),
 
     // email
     SMTP_HOST: z.string().optional(),
