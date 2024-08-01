@@ -1,10 +1,10 @@
 import { metaObject } from '@/config/site.config';
-import OrganizationAdmin from '@/app/shared/settings/organization-admin';
+import AdminInfo from '@/app/shared/settings/adminInfo';
 
 export const metadata = {
   ...metaObject('Profile Settings'),
 };
 
 export default function ProfileSettingsFormPage() {
-  return <OrganizationAdmin />;
+  return <AdminInfo />;
 }

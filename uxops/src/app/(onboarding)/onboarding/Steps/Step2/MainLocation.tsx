@@ -22,7 +22,7 @@ export default function MainLocation({ className }: { className?: string }) {
 
   return (
     <FormGroup
-      title="Main Location"
+      title="Office Locations"
       description="Input your main location"
       className={cn(className)}
     >
@@ -46,7 +46,7 @@ export default function MainLocation({ className }: { className?: string }) {
                   prefixClassName: 'absolute start-3',
                   className: '[&_label>div]:p-0',
                   clearable: false,
-                  label: 'Main Location',
+                  label: 'Primary Location',
                   error: errors.main_location?.message as string,
                 }}
                 mapClassName="rounded-lg"
@@ -74,7 +74,7 @@ export default function MainLocation({ className }: { className?: string }) {
                 prefixClassName: 'absolute start-3',
                 className: '[&_label>div]:p-0',
                 clearable: false,
-                label: 'Secondary Location (Optional)',
+                label: 'Secondary Location',
                 error: errors.secondary_location?.message as string,
               }}
               mapClassName="rounded-lg"

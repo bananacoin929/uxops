@@ -109,7 +109,7 @@ export default function StepThree() {
           <div className="flex flex-col gap-4">
             <FormGroup
               title="Departments"
-              description="Please edit the departments that are available to monitor in your organization"
+              description="Please select or add the departments in your organization that you like to monitor"
               className="pt-7 @2xl:pt-9 @3xl:grid-cols-5 @3xl:pt-11"
             />
             <div className="flex w-full justify-between">

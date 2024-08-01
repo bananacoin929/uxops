@@ -16,7 +16,7 @@ export default function TotalNumberOfEmployees({
   return (
     <FormGroup
       title="Total Number of Employees"
-      description="Total Number of Employees"
+      description="Number of total employees"
       className={cn(className)}
     >
       <Controller
