@@ -105,7 +105,7 @@ export default function StepThree() {
         return (
           <>
             <FormGroup
-              title="Departments Detail"
+              title="Departments Info"
               description="Please enter additional information for each department you selected"
               className="pt-7 @2xl:pt-9 @3xl:grid-cols-5 @3xl:pt-11"
             />

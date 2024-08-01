@@ -12,7 +12,7 @@ import { useBerylliumSidebars } from '@/layouts/beryllium/beryllium-utils';
 
 const menuItems = [
   {
-    label: 'Organization Admin',
+    label: 'Admin Info',
     value: '/settings',
   },
   {
@@ -24,8 +24,8 @@ const menuItems = [
     value: '/settings/department',
   },
   {
-    label: 'Departments Detail',
-    value: '/settings/department-detail',
+    label: 'Departments Info',
+    value: '/settings/department-info',
   },
   {
     label: 'Integration',

@@ -149,6 +149,11 @@ export const routes = {
   main: '/',
   settings: {
     default: '/settings',
+    adminInfo: '/settings',
+    organization: '/settings/organization',
+    department: '/settings/department',
+    departmentInfo: '/settings/department-info',
+    integration: '/settings/integration'
   },
   dashboard: '/',
   product: '/product',

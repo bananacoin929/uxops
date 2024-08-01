@@ -1,10 +1,10 @@
 import { metaObject } from '@/config/site.config';
-import DepartmentDetail from '@/app/shared/settings/departmentDetail';
+import DepartmentInfo from '@/app/shared/settings/departmentInfo';
 
 // export const metadata = {
 //   ...metaObject('Notification'),
 // };
 
 export default function IntegrationSettingsFormPage() {
-  return <DepartmentDetail />;
+  return <DepartmentInfo />;
 }
