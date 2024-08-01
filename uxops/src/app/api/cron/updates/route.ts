@@ -1,22 +1,24 @@
 import connectMongo from '@/lib/mongodb/db_connect';
-import { createClient } from '@supabase/supabase-js';
+// import { createClient } from '@supabase/supabase-js';
 import ProductUpdate from '@/lib/mongodb/models/product-update';
 
 const createClientApp = require('@/lib/msal/msal-node');
 const { Client } = require('@microsoft/microsoft-graph-client');
 
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-  process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-);
+// const supabaseAdmin = createClient(
+//   process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+//   process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+// );
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
     await connectMongo();
-    const { data, error } = await supabaseAdmin
-      .from('integrations')
-      .select('*');
+    // const { data, error } = await supabaseAdmin
+    //   .from('integrations')
+    //   .select('*');
+    let error;
+    let data: any[] = [];
     if (!error) {
       for (const item of data) {
         if (item.azure?.enabled === true) {
