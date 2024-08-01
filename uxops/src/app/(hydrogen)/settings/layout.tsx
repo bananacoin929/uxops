@@ -3,7 +3,7 @@ import PageHeader from '@/app/shared/page-header';
 import ProfileSettingsNav from '@/app/shared/settings/navigation';
 
 const pageHeader = {
-  title: 'Onboarding',
+  title: 'Settings',
   breadcrumb: [
     {
       href: '/',
@@ -12,9 +12,6 @@ const pageHeader = {
     {
       href: routes.settings.default,
       name: 'Settings',
-    },
-    {
-      name: 'Onboarding',
     },
   ],
 };
