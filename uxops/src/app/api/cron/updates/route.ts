@@ -1,13 +1,17 @@
 import connectMongo from '@/lib/mongodb/db_connect';
-import { supabaseAdmin } from '@/lib/supabase/admin';
+import { createClient } from '@supabase/supabase-js';
 import ProductUpdate from '@/lib/mongodb/models/product-update';
-import { NextResponse } from 'next/server';
 
 const createClientApp = require('@/lib/msal/msal-node');
 const { Client } = require('@microsoft/microsoft-graph-client');
 
+import { NextResponse } from 'next/server';
 
 export async function GET() {
+  const supabaseAdmin = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+  );
   try {
     await connectMongo();
     const { data, error } = await supabaseAdmin
