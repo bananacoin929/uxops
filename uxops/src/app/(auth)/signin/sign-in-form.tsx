@@ -8,7 +8,6 @@ import { Form } from '@ui/form';
 import { routes } from '@/config/routes';
 import { loginSchema, LoginSchema } from '@/validators/login.schema';
 import { useSupabase } from '@/lib/providers/supabase-provider';
-import { supabaseAdmin } from '@/lib/supabase/admin';
 import { useRouter } from 'next/navigation';
 import { errorNotification, successNotification } from '@/utils/notification';
 import { setGlobalInLocal } from '@/lib/providers/session';
@@ -41,13 +40,13 @@ export default function SignInForm() {
       setGlobalInLocal(JSON.stringify(userProfile));
       successNotification('Welcome to our homepage!');
 
-      const { data } = await supabaseAdmin
+      const { data } = await supabase
         .from('users')
         .select('is_onboarding')
         .eq('id', userData.user.id)
         .single();
 
-      if (data?.is_onboarding) router.push('/dashboard');
+      if (data?.is_onboarding) router.push('/');
       else router.push('/onboarding');
     }
   };

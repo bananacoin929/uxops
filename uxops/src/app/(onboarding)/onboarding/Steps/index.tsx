@@ -33,8 +33,8 @@ import { createOrgProduct } from '@/utils/org_products';
 import { createOrgProductDepartment } from '@/utils/org_proudct_departments';
 import { successNotification } from '@/utils/notification';
 import { useRouter } from 'next/navigation';
-import { supabaseAdmin } from '@/lib/supabase/admin';
 import { routes } from '@/config/routes';
+import { useSupabase } from '@/lib/providers/supabase-provider';
 
 type FormDataType = {
   id?: number | undefined;
@@ -240,6 +240,7 @@ export const isClickedFooterSubmitButtonAtom = atom(false);
 export const isSaveLoading = atom(false);
 
 export function useStepperOne() {
+  const { supabase } = useSupabase();
   const { userProfile, refetchUserProfile } = useUserProfile();
   const router = useRouter();
   const [step, setStep] = useAtom(stepperAtomOne);
@@ -378,11 +379,10 @@ export function useStepperOne() {
         setIsLoading(false);
         successNotification('Onboarding Steps is saved.');
 
-        const { data, error } = await supabaseAdmin
+        const { data, error } = await supabase
           .from('users')
           .update({
             is_onboarding: true,
-            onboarding_completed: step >= 4 ? true : false,
             onboarding_step: step,
           })
           .eq('id', userProfile?.id)
