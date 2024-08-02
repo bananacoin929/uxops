@@ -19,8 +19,7 @@ export const getOrgLocationById = async (
   const result = await supabaseAdmin
     .from('org_locations')
     .select('*')
-    .eq('org_id', org_id)
-    .eq('is_deleted', false);
+    .eq('org_id', org_id);
 
   return result;
 };
@@ -31,8 +30,7 @@ export const updateOrgLocationById = async (
   const result = await supabaseAdmin
     .from('org_locations')
     .select('*')
-    .eq('org_id', data.org_id)
-    .eq('is_deleted', false);
+    .eq('org_id', data.org_id);
 
   let existLocationData: any[] = result.data ?? [];
   console.log('existLocationData', existLocationData, data);
@@ -49,8 +47,7 @@ export const updateOrgLocationById = async (
           it.name === location.name &&
           it.country === location.country &&
           it.state === location.state &&
-          it.city === location.city &&
-          it.is_deleted === false
+          it.city === location.city
       );
 
       console.log('isExistLocation', isExistLocation);

@@ -15,8 +15,7 @@ export const getOrgCloudProviderById = async (
   const result = await supabaseAdmin
     .from('org_cloud_providers')
     .select('*')
-    .eq('org_id', org_id)
-    .eq('is_deleted', false);
+    .eq('org_id', org_id);
 
   return result;
 };

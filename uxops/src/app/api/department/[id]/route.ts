@@ -10,8 +10,7 @@ export async function GET(
     const { data, error } = await supabaseAdmin
       .from('org_departments')
       .select('*')
-      .eq('org_id', params.id)
-      .eq('is_deleted', false);
+      .eq('org_id', params.id);
 
     if (error)
       return NextResponse.json(
