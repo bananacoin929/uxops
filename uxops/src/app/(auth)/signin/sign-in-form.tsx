@@ -8,6 +8,7 @@ import { Form } from '@ui/form';
 import { routes } from '@/config/routes';
 import { loginSchema, LoginSchema } from '@/validators/login.schema';
 import { useSupabase } from '@/lib/providers/supabase-provider';
+import { supabaseAdmin } from '@/lib/supabase/admin';
 import { useRouter } from 'next/navigation';
 import { errorNotification, successNotification } from '@/utils/notification';
 import { setGlobalInLocal } from '@/lib/providers/session';
@@ -28,17 +29,26 @@ export default function SignInForm() {
   const onSubmit: SubmitHandler<LoginSchema> = async (data) => {
     console.log('Sign in form data', data);
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data: userData, error } = await supabase.auth.signInWithPassword({
       email: data.email,
       password: data.password,
     });
+
     if (error) {
       errorNotification(error.message);
     } else {
       await refetchUserProfile({ isFreshData: true });
       setGlobalInLocal(JSON.stringify(userProfile));
       successNotification('Welcome to our homepage!');
-      router.push('/dashboard');
+
+      const { data } = await supabaseAdmin
+        .from('users')
+        .select('is_onboarding')
+        .eq('id', userData.user.id)
+        .single();
+
+      if (data?.is_onboarding) router.push('/dashboard');
+      else router.push('/onboarding');
     }
   };
 

@@ -32,11 +32,12 @@ export const updateDepDetailById = async (
   if (data.dep_ids) {
     const res = await supabaseAdmin
       .from('dep_details')
-      .update({ is_deleted: true })
+      .delete()
       .in('org_dep_id', data.dep_ids);
+
     await supabaseAdmin
       .from('dep_detail_locations')
-      .update({ is_deleted: true })
+      .delete()
       .in('org_dep_id', data.dep_ids);
 
     result = res;
