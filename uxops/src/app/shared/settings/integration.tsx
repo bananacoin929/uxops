@@ -1,5 +1,5 @@
 'use client';
-import { Accordion, Badge, Input, Password, Switch, Button } from 'rizzui';
+import { Accordion, Badge } from 'rizzui';
 import { FaChevronDown } from 'react-icons/fa';
 import cn from '@utils/class-names';
 import Image from 'next/image';

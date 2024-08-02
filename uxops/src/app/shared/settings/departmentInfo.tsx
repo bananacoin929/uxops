@@ -16,9 +16,11 @@ import { getOrgLocation } from '@/utils/org_locations';
 import { useUserProfile } from '@/lib/providers/user-profile-provider';
 import { getDepDetail, updateDepDetail } from '@/utils/dep_details';
 import { successNotification, errorNotification } from '@/utils/notification';
+import { useSupabase } from '@/lib/providers/supabase-provider';
 
 export default function StepThree() {
-  const { userProfile } = useUserProfile();
+  const { userProfile, refetchUserProfile } = useUserProfile();
+  const { supabase } = useSupabase();
 
   const [options, setOptions] = useState<any[]>([]);
   const [departmentDetails, setDepartmentDetails] = useState<any[]>([]);
@@ -79,6 +81,13 @@ export default function StepThree() {
     console.log(data);
     setDepartmentDetails(data.departments_details ?? []);
     setIsLoading(true);
+    if (userProfile?.onboarding_step < 4) {
+      await supabase
+        .from('users')
+        .update({ onboarding_step: 4, is_onboarding: true })
+        .eq('id', userProfile?.id);
+      await refetchUserProfile({ isFreshData: true });
+    }
     const { error } = await updateDepDetail({
       dep_ids: data.departments_details?.map((it) => it.id),
       department_details: data.departments_details ?? [],

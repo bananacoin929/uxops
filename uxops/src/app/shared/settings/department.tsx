@@ -24,10 +24,11 @@ import {
   defaultDepartments,
   DepartSchema,
 } from '@/validators/onboarding-settings.schema';
+import { useSupabase } from '@/lib/providers/supabase-provider';
 
 export default function StepThree() {
-  const { userProfile } = useUserProfile();
-
+  const { userProfile, refetchUserProfile } = useUserProfile();
+  const { supabase } = useSupabase();
   const [isLoading, setIsLoading] = useState(false);
 
   // Data
@@ -69,6 +70,13 @@ export default function StepThree() {
     setDepartments(data.departments);
     setAllDepartments(data.all_departments ?? []);
     setIsLoading(true);
+    if (userProfile?.onboarding_step < 3) {
+      await supabase
+        .from('users')
+        .update({ onboarding_step: 3, is_onboarding: true })
+        .eq('id', userProfile?.id);
+      await refetchUserProfile({ isFreshData: true });
+    }
     const { error } = await updateOrgDepartment({
       org_id: userProfile?.org_id,
       departments: data.departments,

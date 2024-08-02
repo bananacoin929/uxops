@@ -67,7 +67,7 @@ export default function Header({ className }: FooterProps) {
         {/* <Button variant="text" className="text-white hover:enabled:text-white">
           Questions?
         </Button> */}
-        {step > 1 && step < 6 ? (
+        {step > 1 && step < 5 ? (
           <Button
             {...buttonAttr()}
             type={'submit'}

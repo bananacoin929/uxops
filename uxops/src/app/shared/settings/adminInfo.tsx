@@ -14,9 +14,11 @@ import { PiEnvelopeSimple } from 'react-icons/pi';
 import { getOrgAdmin, updateOrgAdmin } from '@/utils/org_admins';
 import { useUserProfile } from '@/lib/providers/user-profile-provider';
 import { errorNotification, successNotification } from '@/utils/notification';
+import { useSupabase } from '@/lib/providers/supabase-provider';
 
 export default function OrganizationAdmin() {
-  const { userProfile } = useUserProfile();
+  const { supabase } = useSupabase();
+  const { userProfile, refetchUserProfile } = useUserProfile();
   const [orgAdminData, setOrgAdminData] = useState<FormStep1Schema>({
     id: 0,
     first_name: '',
@@ -46,6 +48,13 @@ export default function OrganizationAdmin() {
   const onSubmit: SubmitHandler<FormStep1Schema> = async (data) => {
     console.log(data);
     setIsLoading(true);
+    if (userProfile?.onboarding_step < 1) {
+      await supabase
+        .from('users')
+        .update({ onboarding_step: 1, is_onboarding: true })
+        .eq('id', userProfile?.id);
+      await refetchUserProfile({ isFreshData: true });
+    }
     const { error } = await updateOrgAdmin({
       ...data,
       updated_at: new Date(),

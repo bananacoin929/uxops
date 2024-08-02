@@ -47,7 +47,7 @@ export default function CompanyName({
   });
 
   useEffect(() => {
-    setValue('clientID', data['azure']?.clientID ?? false);
+    setValue('clientID', data['azure']?.clientID);
     setValue('clientSecret', data['azure']?.clientSecret);
     setValue('tenantID', data['azure']?.tenantID);
     setValue('enabled', data['azure']?.enabled);

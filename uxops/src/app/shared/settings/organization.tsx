@@ -30,6 +30,7 @@ import {
 } from '@/utils/org_cloud_providers';
 import { formDataAtom } from '@/app/(onboarding)/onboarding/Steps';
 import { errorNotification, successNotification } from '@/utils/notification';
+import { useSupabase } from '@/lib/providers/supabase-provider';
 
 const MAP_STEP_TO_COMPONENT = {
   [formCompanyParts.companyName]: CompanyName,
@@ -42,7 +43,8 @@ const MAP_STEP_TO_COMPONENT = {
 };
 
 export default function StepTwo() {
-  const { userProfile } = useUserProfile();
+  const { userProfile, refetchUserProfile } = useUserProfile();
+  const { supabase } = useSupabase();
   const [organizationDetail, setOrganizationDetail] = useAtom(formDataAtom);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -104,6 +106,13 @@ export default function StepTwo() {
     });
     setIsLoading(true);
     try {
+      if (userProfile?.onboarding_step < 2) {
+        await supabase
+          .from('users')
+          .update({ onboarding_step: 2 })
+          .eq('id', userProfile?.id);
+        await refetchUserProfile({ isFreshData: true });
+      }
       await updateOrganization({
         id: data.id ?? 0,
         name: data.name,
