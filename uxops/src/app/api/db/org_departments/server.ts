@@ -19,8 +19,7 @@ export const getOrgDepartmentById = async (
   const result = await supabaseAdmin
     .from('org_departments')
     .select('*')
-    .eq('org_id', data.org_id)
-    .eq('is_deleted', false);
+    .eq('org_id', data.org_id);
 
   return result;
 };
@@ -31,8 +30,7 @@ export const getOrgDepartmentDetailById = async (
   const result = await supabaseAdmin
     .from('org_departments')
     .select('*')
-    .eq('org_id', data.org_id)
-    .eq('is_deleted', false);
+    .eq('org_id', data.org_id);
 
   return result;
 };
@@ -43,8 +41,7 @@ export const updateOrgDepartmentById = async (
   const result = await supabaseAdmin
     .from('org_departments')
     .select('*')
-    .eq('org_id', data.org_id)
-    .eq('is_deleted', false);
+    .eq('org_id', data.org_id);
 
   let existDepartData: any[] = result.data ?? [];
   console.log('existDepartData', existDepartData, data);
@@ -56,8 +53,7 @@ export const updateOrgDepartmentById = async (
       const isExistDepart = existDepartData.find(
         (it: any) =>
           it.org_id === data.org_id &&
-          it.name === department &&
-          it.is_deleted === false
+          it.name === department
       );
       console.log('isExistDepart', isExistDepart);
       if (isExistDepart) {
