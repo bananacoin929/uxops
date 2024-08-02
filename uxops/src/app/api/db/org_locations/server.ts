@@ -76,11 +76,12 @@ export const updateOrgLocationById = async (
     for (const item of existLocationData) {
       await supabaseAdmin
         .from('org_locations')
-        .update({ is_deleted: true })
+        .delete()
         .eq('id', item.id);
+
       await supabaseAdmin
         .from('dep_detail_locations')
-        .update({ is_deleted: true })
+        .delete()
         .eq('location_id', item.id);
     }
 

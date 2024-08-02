@@ -81,7 +81,7 @@ export const updateOrgDepartmentById = async (
     for (const item of existDepartData) {
       await supabaseAdmin
         .from('org_departments')
-        .update({ is_deleted: true })
+        .delete()
         .eq('id', item.id);
     }
     if (index === data.departments.length) {

@@ -33,6 +33,7 @@ import { createOrgProduct } from '@/utils/org_products';
 import { createOrgProductDepartment } from '@/utils/org_proudct_departments';
 import { successNotification } from '@/utils/notification';
 import { useRouter } from 'next/navigation';
+import { supabaseAdmin } from '@/lib/supabase/admin';
 import { routes } from '@/config/routes';
 
 type FormDataType = {
@@ -376,6 +377,18 @@ export function useStepperOne() {
         // }
         setIsLoading(false);
         successNotification('Onboarding Steps is saved.');
+
+        const { data, error } = await supabaseAdmin
+          .from('users')
+          .update({
+            is_onboarding: true,
+            onboarding_completed: step >= 4 ? true : false,
+            onboarding_step: step,
+          })
+          .eq('id', userProfile?.id)
+          .select('*')
+          .single();
+
         await refetchUserProfile({ isFreshData: true });
         router.push(routes.main);
       } catch (err) {

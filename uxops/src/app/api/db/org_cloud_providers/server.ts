@@ -26,7 +26,7 @@ export const updateOrgCloudProviderById = async (
 ): Promise<PostgrestSingleResponse<any>> => {
   const result = await supabaseAdmin
     .from('org_cloud_providers')
-    .update({ is_deleted: true })
+    .delete()
     .eq('org_id', data.org_id);
 
   if (!result.error) {
