@@ -1,8 +1,9 @@
-'use client';
+"use client";
 
-import { siteConfig } from '@/config/site.config';
-import hideRechartsConsoleError from '@utils/recharts-console-error';
-import { ThemeProvider as NextThemeProvider } from 'next-themes';
+import { Provider, createStore } from "jotai";
+import { siteConfig } from "@/config/site.config";
+import hideRechartsConsoleError from "@utils/recharts-console-error";
+import { ThemeProvider as NextThemeProvider } from "next-themes";
 
 hideRechartsConsoleError();
 
@@ -15,4 +16,8 @@ export function ThemeProvider({ children }: React.PropsWithChildren<{}>) {
       {children}
     </NextThemeProvider>
   );
+}
+
+export function JotaiProvider({ children }: React.PropsWithChildren<{}>) {
+  return <Provider>{children}</Provider>;
 }

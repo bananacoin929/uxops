@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import { Modal } from 'rizzui';
-import SearchTrigger from './search-trigger';
-import SearchList from './search-list';
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { Modal } from "rizzui";
+import SearchTrigger from "./search-trigger";
+import SearchList from "./search-list";
 
 export default function SearchWidget({
   className,
@@ -19,13 +19,13 @@ export default function SearchWidget({
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
-      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+      if ((event.metaKey || event.ctrlKey) && event.key === "k") {
         event.preventDefault();
         setOpen(!open);
       }
     };
-    window.addEventListener('keydown', onKeyDown);
-    return () => window.removeEventListener('keydown', onKeyDown);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
   const pathname = usePathname();

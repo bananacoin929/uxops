@@ -1,42 +1,41 @@
-'use client';
+"use client";
 
-import { atom, useAtomValue, useSetAtom } from 'jotai';
+import { atom, useAtom } from "jotai";
 
-export type DrawerPlacements = 'left' | 'right' | 'top' | 'bottom';
+export type DrawerPlacements = "left" | "right" | "top" | "bottom";
 
 type DrawerTypes = {
   view: React.ReactNode;
   isOpen: boolean;
   placement?: DrawerPlacements;
-  customSize?: string;
+  containerClassName?: string;
 };
 
 const drawerAtom = atom<DrawerTypes>({
   isOpen: false,
   view: null,
-  placement: 'right',
-  customSize: '320px',
+  placement: "right",
+  containerClassName: "",
 });
 
 export function useDrawer() {
-  const state = useAtomValue(drawerAtom);
-  const setState = useSetAtom(drawerAtom);
+  const [state, setState] = useAtom(drawerAtom);
 
   const openDrawer = ({
     view,
     placement,
-    customSize,
+    containerClassName,
   }: {
     view: React.ReactNode;
     placement: DrawerPlacements;
-    customSize?: string;
+    containerClassName?: string;
   }) => {
     setState({
       ...state,
       isOpen: true,
       view,
       placement,
-      customSize,
+      containerClassName,
     });
   };
 
