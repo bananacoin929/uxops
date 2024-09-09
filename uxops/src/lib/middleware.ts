@@ -87,11 +87,11 @@ export const updateSession = async (request: NextRequest) => {
 
     const isAuthenticated = !!user;
 
-    if (!isAuthenticated && isInAuthRoute(pathname)) {
-      const url = request.nextUrl.clone();
-      url.pathname = '/signin';
-      return NextResponse.redirect(url);
-    }
+    // if (!isAuthenticated && isInAuthRoute(pathname)) {
+    //   const url = request.nextUrl.clone();
+    //   url.pathname = '/signin';
+    //   return NextResponse.redirect(url);
+    // }
 
     return response;
   } catch (e) {

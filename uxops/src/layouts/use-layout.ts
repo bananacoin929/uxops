@@ -22,7 +22,8 @@ const isomorphicLayoutAtomWithPersistence = atom(
 export function useLayout() {
   const [layout, setLayout] = useAtom(isomorphicLayoutAtomWithPersistence);
   return {
-    layout: layout === null ? LAYOUT_OPTIONS.HYDROGEN : layout,
+    // layout: layout === null ? LAYOUT_OPTIONS.HYDROGEN : layout,
+    layout: null,
     setLayout,
   };
 }
